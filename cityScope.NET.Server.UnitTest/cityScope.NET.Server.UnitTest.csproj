@@ -21,4 +21,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\cityScope.NET.Server.Application\cityScope.NET.Server.Application.csproj" />
+  </ItemGroup>
+
 </Project>
