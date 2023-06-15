@@ -15,6 +15,7 @@ namespace cityScope.NET.Server.Persistence
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Announcement> Announcements { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
@@ -31,6 +32,11 @@ namespace cityScope.NET.Server.Persistence
                 }
             }
             return base.SaveChangesAsync(cancellationToken);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Announcement>().Property(a => a.Price).HasPrecision(10, 2);
         }
     }
 }
