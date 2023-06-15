@@ -1,4 +1,5 @@
 ﻿using cityScope.NET.Server.Domain.Entities;
+using cityScope.NET.Server.Persistence.DummyData;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -36,7 +37,20 @@ namespace cityScope.NET.Server.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Announcement>().Property(a => a.Price).HasPrecision(10, 2);
+            modelBuilder.
+               ApplyConfigurationsFromAssembly
+               (typeof(MyDbContext).Assembly);
+
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Announcement>()
+                .Property(a => a.Price).HasPrecision(10, 2);
+
+            var dataGenerator = new DataGenerator();
+
+            modelBuilder.Entity<Announcement>()
+                .HasData(dataGenerator.Announcements);
+
         }
     }
 }
