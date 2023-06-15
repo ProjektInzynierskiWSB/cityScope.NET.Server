@@ -23,6 +23,7 @@ namespace cityScope.NET.Server.Persistence.DummyData
                 .RuleFor(a => a.Id, _ => id++)
                 .RuleFor(a => a.Title, f => f.Commerce.ProductName())
                 .RuleFor(a => a.Description, f => f.Commerce.ProductDescription())
+                .RuleFor(a => a.LastModifiedDate, f => DateTime.Now)
                 .RuleFor(a => a.Price, f => Math.Round(f.Random.Decimal(10,10000),2));
             var list = annoucementGenerator.Generate(10);
             Announcements.AddRange(list);
