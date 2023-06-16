@@ -9,7 +9,7 @@ namespace cityScope.NET.Server.Domain.Entities
     public abstract class AuditableEntity
     {
         //public string CreatedBy { get; set; } = string.Empty;
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public DateTime CreatedDate { get; init; } = DateTime.Now;
         //public string LastModifiedBy { get; set; } = string.Empty;
         public DateTime LastModifiedDate { get; set; }
     }

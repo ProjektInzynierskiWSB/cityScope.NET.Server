@@ -24,9 +24,6 @@ namespace cityScope.NET.Server.Persistence
             {
                 switch (entry.State)
                 {
-                    case EntityState.Added:
-                        entry.Entity.CreatedDate = DateTime.Now;
-                        break;
                     case EntityState.Modified:
                         entry.Entity.LastModifiedDate = DateTime.Now;
                         break;
