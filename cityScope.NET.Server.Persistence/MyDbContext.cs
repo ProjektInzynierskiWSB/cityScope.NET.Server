@@ -40,9 +40,6 @@ namespace cityScope.NET.Server.Persistence
 
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Announcement>()
-                .Property(a => a.Price).HasPrecision(10, 2);
-
             var dataGenerator = new DataGenerator();
 
             modelBuilder.Entity<Announcement>()
