@@ -14,6 +14,6 @@ namespace cityScope.NET.Server.Application.Services.Interfaces
         Task<BaseResponse<AnnouncementDto>> GetAsyncId(int id);
         Task<BaseResponse<int>> AddAnnouncement(AnnouncementDto dto);
         Task<BaseResponse<bool>> DeleteAnnouncement(int id);
-        Task<BaseResponse<bool>> UpdateAnnouncement(AnnouncementDto dto);
+        Task<BaseResponse<bool>> UpdateAnnouncement(AnnouncementDto dto, int id);
     }
 }

@@ -30,8 +30,7 @@ namespace cityScope.NET.Server.Application.Services
             if (result.Id != 0)
             {
                 response.Data = result.Id;
-                response.Success = true;
-                response.Message = "Added succefully";
+                response.Message = "Added succesfully";
 
                 return response;
             }
@@ -41,9 +40,21 @@ namespace cityScope.NET.Server.Application.Services
             return response;                        
         }
 
-        public Task<BaseResponse<bool>> DeleteAnnouncement(int id)
+        public async Task<BaseResponse<bool>> DeleteAnnouncement(int id)
         {
-            throw new NotImplementedException();
+            BaseResponse<bool> response = new();
+            var result = await _announcementRepository.GetByIdAsync(id);
+            if (result != null)
+            {
+                await _announcementRepository.DeleteAsync(result);
+                response.Data = true;
+                response.Message = "Deleted succesfully";
+                return response;
+            }
+            response.Data = false;
+            response.Success = false;
+            response.Message = "Not found";
+            return response;
         }
 
         public async Task<BaseResponse<List<AnnouncementDto>>> GetAllAsync()
@@ -87,9 +98,24 @@ namespace cityScope.NET.Server.Application.Services
             return response;
         }
 
-        public Task<BaseResponse<bool>> UpdateAnnouncement(AnnouncementDto dto)
+        public async Task<BaseResponse<bool>> UpdateAnnouncement(AnnouncementDto dto, int id)
         {
-            throw new NotImplementedException();
+            BaseResponse<bool> response = new();
+            var result = await _announcementRepository.GetByIdAsync(id);
+            if (result != null)
+            {
+                result.Title = dto.Title;
+                result.Price = dto.Price;
+                result.Description = dto.Description;
+                await _announcementRepository.UpdateAsync(result);
+                response.Data = true;
+                response.Message = "Update succesfully";
+                return response;
+            }
+            response.Data = false;
+            response.Success = false;
+            response.Message = "Not found";
+            return response;
         }
     }
 }
