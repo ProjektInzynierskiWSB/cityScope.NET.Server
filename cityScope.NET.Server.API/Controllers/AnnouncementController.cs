@@ -49,7 +49,7 @@ namespace cityScope.NET.Server.API.Controllers
             var result = await _announcementService.AddAnnouncement(announcement);
             if (result.Success == false) 
             {
-                return BadRequest();
+                return BadRequest(result);
             }
             return Ok(result);
         }
