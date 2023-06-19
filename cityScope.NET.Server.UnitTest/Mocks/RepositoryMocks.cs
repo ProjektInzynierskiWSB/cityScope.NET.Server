@@ -37,8 +37,14 @@ namespace cityScope.NET.Server.UnitTest.Mocks
 
             mockAnnouncementRepository.Setup(repo => repo.UpdateAsync(It.IsAny<Announcement>())).Callback<Announcement>((entity) =>
             {
-                announcements.Remove(entity);
-                announcements.Add(entity);
+                //announcements.Remove(entity);
+                var index = announcements.FindIndex(a => a.Id == entity.Id);
+                if (index >= 0)
+                {
+                    announcements.RemoveAt(index);
+                    announcements.Add(entity);
+                }
+                //announcements.Add(entity);
             });
 
             return mockAnnouncementRepository;
