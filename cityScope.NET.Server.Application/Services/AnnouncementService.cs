@@ -102,6 +102,43 @@ namespace cityScope.NET.Server.Application.Services
             return response;
         }
 
+        public async Task<BaseResponse<PagedAnnouncementsDto>> GetPagedAnnouncement(int page, int pageSize)
+        {
+            BaseResponse<PagedAnnouncementsDto> response = new();
+            var result = await _announcementRepository.GetPagedAnnouncement(page, pageSize);
+            if (result == null || result.Count == 0)
+            {
+                response.Data = new PagedAnnouncementsDto();
+                response.Success = false;
+                response.Message = "List was empty";
+                return response;
+            }
+            var count = await _announcementRepository.GetTotalCountOfAnnouncements();
+
+            PagedAnnouncementsDto paged = new();
+
+            List<AnnouncementDto> dtoList = new();
+
+            foreach (var item in result)
+            {
+                AnnouncementDto dto = new()
+                {
+                    Title = item.Title,
+                    Description = item.Description,
+                    Price = item.Price,
+                    CreatedDate = item.CreatedDate,
+                };
+                dtoList.Add(dto);
+            }
+
+            paged.Announcements = dtoList;
+            paged.AllCount = count;
+            paged.Page = page;
+            paged.PageSize = pageSize;
+            response.Data = paged;
+            return response;
+        }
+
         public async Task<BaseResponse<bool>> UpdateAnnouncement(AnnouncementDto dto, int id)
         {
             BaseResponse<bool> response = new();

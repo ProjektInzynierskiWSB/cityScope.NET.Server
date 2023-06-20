@@ -26,11 +26,20 @@ namespace cityScope.NET.Server.API.Controllers
             return Ok(result);
         }
 
+        [HttpGet("/GetPagedAnnouncements", Name = "GetPagedAnnouncements")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult<BaseResponse<PagedAnnouncementsDto>>> GetPagedAnnouncements(int page, int pageSize)
+        {
+            var result = await _announcementService.GetPagedAnnouncement(page, pageSize);
+            return Ok(result);
+        }
+
         [HttpGet("{id}", Name = "GetById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult<BaseResponse<AnnouncementDto>>> GetAnnouncementById(int id)
+        public async Task<ActionResult<BaseResponse<AnnouncementDto>>> GetAnnouncementById([FromRoute] int id)
         {
             var result = await _announcementService.GetAsyncId(id);
             if (result.Success == false)

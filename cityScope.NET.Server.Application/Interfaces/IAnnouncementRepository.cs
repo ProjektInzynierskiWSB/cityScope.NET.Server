@@ -9,5 +9,7 @@ namespace cityScope.NET.Server.Application.Interfaces
 {
     public interface IAnnouncementRepository : IAsyncRepository<Announcement>
     {
+        Task<List<Announcement>> GetPagedAnnouncement(int page, int pageSize);
+        Task<int> GetTotalCountOfAnnouncements();
     }
 }
