@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.5.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\cityScope.NET.Server.Domain\cityScope.NET.Server.Domain.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,9 @@
+using cityScope.NET.Server.Application.Interfaces;
+using cityScope.NET.Server.Application.Services;
+using cityScope.NET.Server.Application.Services.Interfaces;
 using cityScope.NET.Server.Persistence;
+using cityScope.NET.Server.Persistence.DummyData;
+using cityScope.NET.Server.Persistence.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +15,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<MyDbContext>(options => options.UseMySQL(builder.Configuration.GetConnectionString("CityScopeConnectionString")));
+builder.Services.AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>));
+builder.Services.AddScoped<IAnnouncementRepository, AnnouncementRepository>();
+builder.Services.AddScoped<IAnnouncementService, AnnouncementService>();
 
 
 var app = builder.Build();

@@ -1,4 +1,5 @@
 ﻿using cityScope.NET.Server.Domain.Entities;
+using cityScope.NET.Server.Persistence.DummyData;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace cityScope.NET.Server.Persistence
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Announcement> Announcements { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
@@ -22,15 +24,27 @@ namespace cityScope.NET.Server.Persistence
             {
                 switch (entry.State)
                 {
-                    case EntityState.Added:
-                        entry.Entity.CreatedDate = DateTime.Now;
-                        break;
                     case EntityState.Modified:
                         entry.Entity.LastModifiedDate = DateTime.Now;
                         break;
                 }
             }
             return base.SaveChangesAsync(cancellationToken);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.
+               ApplyConfigurationsFromAssembly
+               (typeof(MyDbContext).Assembly);
+
+            base.OnModelCreating(modelBuilder);
+
+            var dataGenerator = new DataGenerator();
+
+            modelBuilder.Entity<Announcement>()
+                .HasData(dataGenerator.Announcements);
+
         }
     }
 }
