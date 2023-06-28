@@ -53,92 +53,92 @@ namespace cityScope.NET.Server.Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2023, 6, 17, 13, 30, 23, 691, DateTimeKind.Local).AddTicks(9926),
-                            Description = "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles",
-                            LastModifiedDate = new DateTime(2023, 6, 17, 13, 30, 23, 692, DateTimeKind.Local).AddTicks(1546),
-                            Price = 7373.92m,
-                            Title = "Unbranded Soft Shirt"
+                            CreatedDate = new DateTime(2023, 6, 28, 14, 28, 12, 430, DateTimeKind.Local).AddTicks(8939),
+                            Description = "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
+                            LastModifiedDate = new DateTime(2023, 6, 28, 14, 28, 12, 431, DateTimeKind.Local).AddTicks(475),
+                            Price = 1209.06m,
+                            Title = "Incredible Plastic Hat"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2023, 6, 17, 13, 30, 23, 692, DateTimeKind.Local).AddTicks(3009),
+                            CreatedDate = new DateTime(2023, 6, 28, 14, 28, 12, 431, DateTimeKind.Local).AddTicks(2060),
                             Description = "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
-                            LastModifiedDate = new DateTime(2023, 6, 17, 13, 30, 23, 692, DateTimeKind.Local).AddTicks(3098),
-                            Price = 5944.20m,
-                            Title = "Handmade Cotton Car"
+                            LastModifiedDate = new DateTime(2023, 6, 28, 14, 28, 12, 431, DateTimeKind.Local).AddTicks(2146),
+                            Price = 4474.67m,
+                            Title = "Generic Steel Table"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2023, 6, 17, 13, 30, 23, 692, DateTimeKind.Local).AddTicks(3117),
-                            Description = "The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive",
-                            LastModifiedDate = new DateTime(2023, 6, 17, 13, 30, 23, 692, DateTimeKind.Local).AddTicks(3150),
-                            Price = 2361.34m,
-                            Title = "Awesome Steel Bike"
+                            CreatedDate = new DateTime(2023, 6, 28, 14, 28, 12, 431, DateTimeKind.Local).AddTicks(2164),
+                            Description = "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles",
+                            LastModifiedDate = new DateTime(2023, 6, 28, 14, 28, 12, 431, DateTimeKind.Local).AddTicks(2199),
+                            Price = 4322.29m,
+                            Title = "Fantastic Cotton Fish"
                         },
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2023, 6, 17, 13, 30, 23, 692, DateTimeKind.Local).AddTicks(3160),
-                            Description = "New ABC 13 9370, 13.3, 5th Gen CoreA5-8250U, 8GB RAM, 256GB SSD, power UHD Graphics, OS 10 Home, OS Office A & J 2016",
-                            LastModifiedDate = new DateTime(2023, 6, 17, 13, 30, 23, 692, DateTimeKind.Local).AddTicks(3236),
-                            Price = 3495.77m,
-                            Title = "Refined Concrete Keyboard"
+                            CreatedDate = new DateTime(2023, 6, 28, 14, 28, 12, 431, DateTimeKind.Local).AddTicks(2209),
+                            Description = "The slim & simple Maple Gaming Keyboard from Dev Byte comes with a sleek body and 7- Color RGB LED Back-lighting for smart functionality",
+                            LastModifiedDate = new DateTime(2023, 6, 28, 14, 28, 12, 431, DateTimeKind.Local).AddTicks(2240),
+                            Price = 5028.26m,
+                            Title = "Small Cotton Bike"
                         },
                         new
                         {
                             Id = 5,
-                            CreatedDate = new DateTime(2023, 6, 17, 13, 30, 23, 692, DateTimeKind.Local).AddTicks(3246),
-                            Description = "Carbonite web goalkeeper gloves are ergonomically designed to give easy fit",
-                            LastModifiedDate = new DateTime(2023, 6, 17, 13, 30, 23, 692, DateTimeKind.Local).AddTicks(3275),
-                            Price = 8132.09m,
-                            Title = "Licensed Metal Keyboard"
+                            CreatedDate = new DateTime(2023, 6, 28, 14, 28, 12, 431, DateTimeKind.Local).AddTicks(2249),
+                            Description = "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles",
+                            LastModifiedDate = new DateTime(2023, 6, 28, 14, 28, 12, 431, DateTimeKind.Local).AddTicks(2278),
+                            Price = 9727.81m,
+                            Title = "Ergonomic Cotton Shirt"
                         },
                         new
                         {
                             Id = 6,
-                            CreatedDate = new DateTime(2023, 6, 17, 13, 30, 23, 692, DateTimeKind.Local).AddTicks(3284),
-                            Description = "New ABC 13 9370, 13.3, 5th Gen CoreA5-8250U, 8GB RAM, 256GB SSD, power UHD Graphics, OS 10 Home, OS Office A & J 2016",
-                            LastModifiedDate = new DateTime(2023, 6, 17, 13, 30, 23, 692, DateTimeKind.Local).AddTicks(3313),
-                            Price = 4585.90m,
-                            Title = "Small Concrete Towels"
+                            CreatedDate = new DateTime(2023, 6, 28, 14, 28, 12, 431, DateTimeKind.Local).AddTicks(2286),
+                            Description = "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
+                            LastModifiedDate = new DateTime(2023, 6, 28, 14, 28, 12, 431, DateTimeKind.Local).AddTicks(2314),
+                            Price = 8698.61m,
+                            Title = "Intelligent Rubber Shirt"
                         },
                         new
                         {
                             Id = 7,
-                            CreatedDate = new DateTime(2023, 6, 17, 13, 30, 23, 692, DateTimeKind.Local).AddTicks(3321),
-                            Description = "The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
-                            LastModifiedDate = new DateTime(2023, 6, 17, 13, 30, 23, 692, DateTimeKind.Local).AddTicks(3351),
-                            Price = 8064.58m,
-                            Title = "Handcrafted Wooden Mouse"
+                            CreatedDate = new DateTime(2023, 6, 28, 14, 28, 12, 431, DateTimeKind.Local).AddTicks(2323),
+                            Description = "The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive",
+                            LastModifiedDate = new DateTime(2023, 6, 28, 14, 28, 12, 431, DateTimeKind.Local).AddTicks(2350),
+                            Price = 2630.41m,
+                            Title = "Handcrafted Steel Ball"
                         },
                         new
                         {
                             Id = 8,
-                            CreatedDate = new DateTime(2023, 6, 17, 13, 30, 23, 692, DateTimeKind.Local).AddTicks(3359),
-                            Description = "The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
-                            LastModifiedDate = new DateTime(2023, 6, 17, 13, 30, 23, 692, DateTimeKind.Local).AddTicks(3390),
-                            Price = 3162.46m,
-                            Title = "Sleek Steel Pizza"
+                            CreatedDate = new DateTime(2023, 6, 28, 14, 28, 12, 431, DateTimeKind.Local).AddTicks(2358),
+                            Description = "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
+                            LastModifiedDate = new DateTime(2023, 6, 28, 14, 28, 12, 431, DateTimeKind.Local).AddTicks(2386),
+                            Price = 3485.03m,
+                            Title = "Handcrafted Wooden Chicken"
                         },
                         new
                         {
                             Id = 9,
-                            CreatedDate = new DateTime(2023, 6, 17, 13, 30, 23, 692, DateTimeKind.Local).AddTicks(3399),
-                            Description = "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles",
-                            LastModifiedDate = new DateTime(2023, 6, 17, 13, 30, 23, 692, DateTimeKind.Local).AddTicks(3428),
-                            Price = 2186.78m,
-                            Title = "Licensed Plastic Cheese"
+                            CreatedDate = new DateTime(2023, 6, 28, 14, 28, 12, 431, DateTimeKind.Local).AddTicks(2394),
+                            Description = "New ABC 13 9370, 13.3, 5th Gen CoreA5-8250U, 8GB RAM, 256GB SSD, power UHD Graphics, OS 10 Home, OS Office A & J 2016",
+                            LastModifiedDate = new DateTime(2023, 6, 28, 14, 28, 12, 431, DateTimeKind.Local).AddTicks(2421),
+                            Price = 5817.32m,
+                            Title = "Intelligent Metal Cheese"
                         },
                         new
                         {
                             Id = 10,
-                            CreatedDate = new DateTime(2023, 6, 17, 13, 30, 23, 692, DateTimeKind.Local).AddTicks(3437),
-                            Description = "Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals",
-                            LastModifiedDate = new DateTime(2023, 6, 17, 13, 30, 23, 692, DateTimeKind.Local).AddTicks(3464),
-                            Price = 6116.19m,
-                            Title = "Handcrafted Frozen Cheese"
+                            CreatedDate = new DateTime(2023, 6, 28, 14, 28, 12, 431, DateTimeKind.Local).AddTicks(2429),
+                            Description = "The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
+                            LastModifiedDate = new DateTime(2023, 6, 28, 14, 28, 12, 431, DateTimeKind.Local).AddTicks(2459),
+                            Price = 2258.54m,
+                            Title = "Licensed Rubber Keyboard"
                         });
                 });
 
