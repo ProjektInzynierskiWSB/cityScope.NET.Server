@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using cityScope.NET.Server.Application.Helpers;
 using cityScope.NET.Server.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -20,11 +21,13 @@ namespace cityScope.NET.Server.Persistence.DummyData
         {
             string locale = "pl";
             int id = 1;
+            string pass = "string123";
+            PasswordHasher.CreatePasswordHash(pass, out byte[] passwordHash, out byte[] passwordSalt);
             var userGenerator = new Faker<User>(locale)
                 .RuleFor(u => u.Id, _ => 1)
-                .RuleFor(u => u.Email, f => f.Person.Email.ToLower())
-                .RuleFor(u => u.PasswordHash, new byte[2] { 1, 2 })
-                .RuleFor(u => u.PasswordSalt, new byte[2] { 1, 2 });
+                .RuleFor(u => u.Email, "example@example.com")
+                .RuleFor(u => u.PasswordHash, passwordHash)
+                .RuleFor(u => u.PasswordSalt, passwordSalt);
             var listUsers = userGenerator.Generate(1);
             Users.AddRange(listUsers);
 

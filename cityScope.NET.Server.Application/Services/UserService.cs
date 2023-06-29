@@ -1,4 +1,5 @@
 ﻿using cityScope.NET.Server.Application.Dtos;
+using cityScope.NET.Server.Application.Helpers;
 using cityScope.NET.Server.Application.Interfaces;
 using cityScope.NET.Server.Application.Response;
 using cityScope.NET.Server.Application.Services.Interfaces;
@@ -43,7 +44,9 @@ namespace cityScope.NET.Server.Application.Services
             {
                 return new BaseResponse<int>() { Success = false, Message = "User Exist" };
             }
-            CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
+
+            PasswordHasher.CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
+            //CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
 
             User user = new();
             user.Email = userDto.Email;
@@ -71,7 +74,7 @@ namespace cityScope.NET.Server.Application.Services
             {
                 return new BaseResponse<string>() { Success = false, Message = "User not exist or wrong password" };
             }
-            else if(!VerifyPasswordHash(userDto.Password, user.PasswordHash, user.PasswordSalt)) 
+            else if(!PasswordHasher.VerifyPasswordHash(userDto.Password, user.PasswordHash, user.PasswordSalt)) 
             {
                 return new BaseResponse<string>() { Success = false, Message = "User not exist or wrong password" };
             }
@@ -80,24 +83,6 @@ namespace cityScope.NET.Server.Application.Services
                 response.Data = CreateToken(user);
             }
             return response;
-        }
-        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
-        {
-            using (var hmac = new HMACSHA512())
-            {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-            }
-        }
-
-        private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
-        {
-            using (var hmac = new HMACSHA512(passwordSalt))
-            {
-                var computedHash =
-                    hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-                return computedHash.SequenceEqual(passwordHash);
-            }
         }
 
         private string CreateToken(User user)
