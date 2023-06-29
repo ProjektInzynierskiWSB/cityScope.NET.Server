@@ -50,6 +50,75 @@ namespace cityScope.NET.Server.UnitTest.Mocks
             return mockAnnouncementRepository;
         }
 
+        public static Mock<IUserRepository> GetUserRepository()
+        {
+            var users = GetUsers();
+            var mockUserRepository = new Mock<IUserRepository>();
+
+            mockUserRepository.Setup(repo => repo.GetAllAsync()).ReturnsAsync(users);
+
+            mockUserRepository.Setup(repo => repo.AddAsync(It.IsAny<User>())).ReturnsAsync(
+                (User user) =>
+                {
+                    users.Add(user);
+                    return user;
+                });
+
+            mockUserRepository.Setup(repo => repo.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(
+                (int id) =>
+                {
+                    var user = users.FirstOrDefault(a => a.Id == id);
+                    return user;
+                });
+
+            mockUserRepository.Setup(repo => repo.UserExist(It.IsAny<string>())).ReturnsAsync(
+                (string email) =>
+                {
+                    var exist = users.Any(user => user.Email.ToLower().Equals(email.ToLower()));
+                    return exist;
+                });
+
+            mockUserRepository.Setup(repo => repo.GetUserByEmail(It.IsAny<string>())).ReturnsAsync(
+                (string email) =>
+                {
+                    var user = users.FirstOrDefault(user => user.Email.ToLower().Equals(email.ToLower()));
+                    return user;
+                });
+            return mockUserRepository;
+        }
+
+        private static List<User> GetUsers()
+        {
+            var list = new List<User>();
+            User u1 = new User()
+            {
+                Id = 1,
+                Email = "example@string.com",
+                PasswordHash = new byte[2] { 1, 2 },
+                PasswordSalt = new byte[2] { 1, 2 },
+                CreatedDate = DateTime.Now,
+            };
+            User u2 = new User()
+            {
+                Id = 2,
+                Email = "example2@string.com",
+                PasswordHash = new byte[2] { 1, 2 },
+                PasswordSalt = new byte[2] { 1, 2 },
+                CreatedDate = DateTime.Now,
+            };
+            User u3 = new User()
+            {
+                Id = 3,
+                Email = "example3@string.com",
+                PasswordHash = new byte[2] { 1, 2 },
+                PasswordSalt = new byte[2] { 1, 2 },
+                CreatedDate = DateTime.Now,
+            };
+            list.Add(u1);list.Add(u2);list.Add(u3);
+
+            return list;
+        }
+
         private static List<Announcement> GetAnnouncements()
         {
             var list = new List<Announcement>();
