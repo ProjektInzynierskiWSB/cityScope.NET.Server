@@ -2,6 +2,7 @@
 using cityScope.NET.Server.Application.Interfaces;
 using cityScope.NET.Server.Application.Services;
 using cityScope.NET.Server.UnitTest.Mocks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Moq;
 using Shouldly;
@@ -17,17 +18,19 @@ namespace cityScope.NET.Server.UnitTest.UserTests
     {
         private readonly Mock<IUserRepository> _mockRepository;
         private readonly IConfiguration _configuration;
+        private readonly IHttpContextAccessor _contextAccessor;
 
         public RegisterUserTests()
         {
             _mockRepository = RepositoryMocks.GetUserRepository();
             _configuration = TestHelpers.GetConfigurationRoot();
+            _contextAccessor = TestHelpers.MockHttpContextAccessor();
         }
 
         [Fact]
         public async Task ValidUser_RegisterUser()
         {
-            var handler = new UserService(_mockRepository.Object, _configuration);
+            var handler = new UserService(_mockRepository.Object, _configuration, _contextAccessor);
             var allUsersBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
             UserRegisterDto userRegisterDto = new()
             {
@@ -46,7 +49,7 @@ namespace cityScope.NET.Server.UnitTest.UserTests
         [Fact]
         public async Task NotValid_NotRegister_EmailIsNotEmail()
         {
-            var handler = new UserService(_mockRepository.Object, _configuration);
+            var handler = new UserService(_mockRepository.Object, _configuration, _contextAccessor);
             var allUsersBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
             UserRegisterDto userRegisterDto = new()
             {
@@ -65,7 +68,7 @@ namespace cityScope.NET.Server.UnitTest.UserTests
         [Fact]
         public async Task NotValid_NotRegister_PasswordNotMatch()
         {
-            var handler = new UserService(_mockRepository.Object, _configuration);
+            var handler = new UserService(_mockRepository.Object, _configuration, _contextAccessor);
             var allUsersBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
             UserRegisterDto userRegisterDto = new()
             {
@@ -84,7 +87,7 @@ namespace cityScope.NET.Server.UnitTest.UserTests
         [Fact]
         public async Task NotValid_NotRegister_PasswordTooShort()
         {
-            var handler = new UserService(_mockRepository.Object, _configuration);
+            var handler = new UserService(_mockRepository.Object, _configuration, _contextAccessor);
             var allUsersBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
             UserRegisterDto userRegisterDto = new()
             {

@@ -4,6 +4,7 @@ using cityScope.NET.Server.Application.Response;
 using cityScope.NET.Server.Application.Services.Interfaces;
 using cityScope.NET.Server.Application.Validators;
 using cityScope.NET.Server.Domain.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -21,10 +22,12 @@ namespace cityScope.NET.Server.Application.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly IConfiguration _configuration;
-        public UserService(IUserRepository userRepository, IConfiguration configuration)
+        private readonly IHttpContextAccessor _contextAccessor;
+        public UserService(IUserRepository userRepository, IConfiguration configuration, IHttpContextAccessor contextAccessor)
         {
             _userRepository = userRepository;
             _configuration = configuration;
+            _contextAccessor = contextAccessor;
         }
 
         public async Task<BaseResponse<int>> Register(UserRegisterDto userDto, string password)
@@ -115,5 +118,9 @@ namespace cityScope.NET.Server.Application.Services
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
             return jwt;                  
         }
+
+        public int GetUserId() => int.Parse(_contextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+        public string GetUserEmail() => _contextAccessor.HttpContext.User.FindFirst(ClaimTypes.Name).Value;
     }
 }

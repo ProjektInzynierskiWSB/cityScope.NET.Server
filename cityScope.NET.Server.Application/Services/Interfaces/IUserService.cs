@@ -12,5 +12,7 @@ namespace cityScope.NET.Server.Application.Services.Interfaces
     {
         Task<BaseResponse<int>> Register(UserRegisterDto userDto, string password);
         Task<BaseResponse<string>> Login(UserLoginDto user);
+        int GetUserId();
+        string GetUserEmail();
     }
 }

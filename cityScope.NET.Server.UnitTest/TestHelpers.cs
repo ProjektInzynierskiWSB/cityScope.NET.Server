@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +18,15 @@ namespace cityScope.NET.Server.UnitTest
                 .AddJsonFile("appsettings.local.json", true, true)
                 .AddEnvironmentVariables()
                 .Build();
+        }
+
+        public static IHttpContextAccessor MockHttpContextAccessor()
+        {
+            var mockHttpContext = new Mock<IHttpContextAccessor>();
+            var context = new DefaultHttpContext();
+            mockHttpContext.Setup(c => c .HttpContext).Returns(context);
+
+            return mockHttpContext.Object;
         }
     }
 }
