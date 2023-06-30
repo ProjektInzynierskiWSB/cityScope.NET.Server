@@ -17,7 +17,9 @@ namespace cityScope.NET.Server.Application.Validators
                  .NotNull()
                  .WithMessage("{PropertyName} is required")
                  .EmailAddress()
-                 .WithMessage("{PropertyName} accept only email address");
+                 .WithMessage("{PropertyName} accept only email address")
+                 .MaximumLength(255)
+                 .WithMessage("{PropertyName} maximum length is 255");
 
             RuleFor(u => u.Password)
                 .NotNull()

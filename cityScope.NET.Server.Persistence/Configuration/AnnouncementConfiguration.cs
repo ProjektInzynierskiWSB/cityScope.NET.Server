@@ -16,6 +16,7 @@ namespace cityScope.NET.Server.Persistence.Configuration
             builder.Property(a => a.Title).IsRequired().HasMaxLength(100);
             builder.Property(a => a.Description).IsRequired().HasMaxLength(1000);
             builder.Property(a => a.Price).IsRequired().HasPrecision(10, 2);
+            builder.Property(a => a.UserId).IsRequired();
         }
     }
 }

@@ -104,7 +104,7 @@ namespace cityScope.NET.Server.Application.Services
             return jwt;                  
         }
 
-        public int GetUserId() => int.Parse(_contextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+        public int GetUserId() => int.Parse(_contextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier).Value);
 
         public string GetUserEmail() => _contextAccessor.HttpContext.User.FindFirst(ClaimTypes.Name).Value;
     }

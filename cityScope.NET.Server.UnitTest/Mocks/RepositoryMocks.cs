@@ -129,7 +129,8 @@ namespace cityScope.NET.Server.UnitTest.Mocks
                 Description = "Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals",
                 Price = 19.99m,
                 CreatedDate = DateTime.Now,
-                LastModifiedDate = DateTime.MinValue
+                LastModifiedDate = DateTime.MinValue,
+                UserId = 1,
             };
 
             Announcement a2 = new Announcement()
@@ -139,7 +140,8 @@ namespace cityScope.NET.Server.UnitTest.Mocks
                 Description = "Discover our new collection of trendy clothes and enjoy special discounts for a limited time.",
                 Price = 29.99m,
                 CreatedDate = DateTime.Now,
-                LastModifiedDate = DateTime.MinValue
+                LastModifiedDate = DateTime.MinValue,
+                UserId = 1
             };
 
             Announcement a3 = new Announcement()
@@ -149,7 +151,8 @@ namespace cityScope.NET.Server.UnitTest.Mocks
                 Description = "Plan your dream summer vacation with our exclusive deals on hotels, flights, and tours.",
                 Price = 1999.99m,
                 CreatedDate = DateTime.Now,
-                LastModifiedDate = DateTime.MinValue
+                LastModifiedDate = DateTime.MinValue,
+                UserId = 1
             };
 
             Announcement a4 = new Announcement()
@@ -159,7 +162,8 @@ namespace cityScope.NET.Server.UnitTest.Mocks
                 Description = "Indulge in a gastronomic experience at our annual gourmet food festival. Taste exquisite dishes prepared by renowned chefs.",
                 Price = 49.99m,
                 CreatedDate = DateTime.Now,
-                LastModifiedDate = DateTime.MinValue
+                LastModifiedDate = DateTime.MinValue,
+                UserId = 1
             };
 
             Announcement a5 = new Announcement()
@@ -169,7 +173,8 @@ namespace cityScope.NET.Server.UnitTest.Mocks
                 Description = "Get fit and save money with our limited-time offer on gym memberships. Achieve your fitness goals with state-of-the-art equipment and professional trainers.",
                 Price = 39.99m,
                 CreatedDate = DateTime.Now,
-                LastModifiedDate = DateTime.MinValue
+                LastModifiedDate = DateTime.MinValue,
+                UserId = 1
             };
             list.Add(a1);
             list.Add(a2);
