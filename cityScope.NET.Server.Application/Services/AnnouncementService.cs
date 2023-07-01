@@ -15,14 +15,17 @@ namespace cityScope.NET.Server.Application.Services
     public class AnnouncementService : IAnnouncementService
     {
         private readonly IAnnouncementRepository _announcementRepository;
-        public AnnouncementService(IAnnouncementRepository announcementRepository)
+        private readonly IUserService _userService;
+        public AnnouncementService(IAnnouncementRepository announcementRepository, IUserService userService)
         {
             _announcementRepository = announcementRepository;
+            _userService = userService;
         }
 
         public async Task<BaseResponse<int>> AddAnnouncement(AnnouncementDto dto)
         {
             BaseResponse<int> response = new();
+            int userId = _userService.GetUserId();
             AnnouncementValidator validator = new();
             var validadorResult = await validator.ValidateAsync(dto);
             if (validadorResult.IsValid)
@@ -31,6 +34,7 @@ namespace cityScope.NET.Server.Application.Services
                 announcement.Price = dto.Price;
                 announcement.Description = dto.Description;
                 announcement.Title = dto.Title;
+                announcement.UserId = userId;
                 var result = await _announcementRepository.AddAsync(announcement);
                 response.Data = result.Id;
                 response.Message = "Added succesfully";
@@ -47,7 +51,15 @@ namespace cityScope.NET.Server.Application.Services
         public async Task<BaseResponse<bool>> DeleteAnnouncement(int id)
         {
             BaseResponse<bool> response = new();
+            int userId = _userService.GetUserId();
             var result = await _announcementRepository.GetByIdAsync(id);
+            if (result.UserId != userId)
+            {
+                response.Success = false;
+                response.Data = false;
+                response.Message = "Not found";
+                return response;
+            }
             if (result != null)
             {
                 await _announcementRepository.DeleteAsync(result);
@@ -97,6 +109,7 @@ namespace cityScope.NET.Server.Application.Services
             dto.Description = result.Description;
             dto.Price = result.Price;
             dto.CreatedDate = result.CreatedDate;
+            dto.UserId = result.UserId;
 
             response.Data = dto;
             return response;
@@ -127,6 +140,7 @@ namespace cityScope.NET.Server.Application.Services
                     Description = item.Description,
                     Price = item.Price,
                     CreatedDate = item.CreatedDate,
+                    UserId = item.UserId,
                 };
                 dtoList.Add(dto);
             }
@@ -142,15 +156,23 @@ namespace cityScope.NET.Server.Application.Services
         public async Task<BaseResponse<bool>> UpdateAnnouncement(AnnouncementDto dto, int id)
         {
             BaseResponse<bool> response = new();
+            var result = await _announcementRepository.GetByIdAsync(id);
+            if (result == null)
+            {
+                response.Success = false;
+                response.Message = "Not found";
+                return response;
+            }
+
+            int userId = _userService.GetUserId();
             AnnouncementValidator validator = new();
             var validadorResult = await validator.ValidateAsync(dto);
-            if (validadorResult.IsValid)
+            if (validadorResult.IsValid && result.UserId == userId)
             {
-                Announcement announcement = new();
-                announcement.Price = dto.Price;
-                announcement.Description = dto.Description;
-                announcement.Title = dto.Title;
-                await _announcementRepository.UpdateAsync(announcement);
+                result.Price = dto.Price;
+                result.Description = dto.Description;
+                result.Title = dto.Title;
+                await _announcementRepository.UpdateAsync(result);
                 response.Data = true;
                 response.Message = "Update succesfully";
 

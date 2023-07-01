@@ -1,4 +1,5 @@
 ﻿using cityScope.NET.Server.Application.Interfaces;
+using cityScope.NET.Server.Application.Services.Interfaces;
 using cityScope.NET.Server.Domain.Entities;
 using Moq;
 using System;
@@ -12,6 +13,15 @@ namespace cityScope.NET.Server.UnitTest.Mocks
 {
     public class RepositoryMocks
     {
+        public static Mock<IUserService> GetUserService()
+        {
+            var mockUserService = new Mock<IUserService>();
+
+            mockUserService.Setup(repo => repo.GetUserId()).Returns(1);
+            mockUserService.Setup(repo => repo.GetUserEmail()).Returns("example@string.com");
+
+            return mockUserService;
+        }
         public static Mock<IAnnouncementRepository> GetAnnouncementRepository()
         {
             var announcements = GetAnnouncements();
@@ -176,11 +186,23 @@ namespace cityScope.NET.Server.UnitTest.Mocks
                 LastModifiedDate = DateTime.MinValue,
                 UserId = 1
             };
+
+            Announcement a6 = new()
+            {
+                Id = 6,
+                Title = "Kosiarka",
+                Description = "Sprzedam używaną kosiarkę, działa!",
+                Price = 100,
+                CreatedDate = DateTime.Now,
+                LastModifiedDate = DateTime.MinValue,
+                UserId = 2
+            };
             list.Add(a1);
             list.Add(a2);
             list.Add(a3);
             list.Add(a4);
             list.Add(a5);
+            list.Add(a6);
             return list;
         }
     }
