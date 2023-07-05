@@ -42,6 +42,9 @@ namespace cityScope.NET.Server.Persistence
 
             var dataGenerator = new DataGenerator();
 
+            modelBuilder.Entity<User>()
+                .HasData(dataGenerator.Users);
+
             modelBuilder.Entity<Announcement>()
                 .HasData(dataGenerator.Announcements);
 

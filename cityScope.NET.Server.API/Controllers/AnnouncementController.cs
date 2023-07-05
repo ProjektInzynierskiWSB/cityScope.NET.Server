@@ -3,6 +3,7 @@ using cityScope.NET.Server.Application.Interfaces;
 using cityScope.NET.Server.Application.Response;
 using cityScope.NET.Server.Application.Services.Interfaces;
 using cityScope.NET.Server.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -53,6 +54,7 @@ namespace cityScope.NET.Server.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
+        [Authorize]
         public async Task<ActionResult<BaseResponse<int>>> AddAnnouncement([FromBody] AnnouncementDto announcement)
         {
             var result = await _announcementService.AddAnnouncement(announcement);
@@ -63,10 +65,11 @@ namespace cityScope.NET.Server.API.Controllers
             return Ok(result);
         }
 
-        [HttpPut]
+        [HttpPut("{id}", Name = "Update")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
+        [Authorize]
         public async Task<ActionResult<bool>> UpdateAnnouncement([FromBody] AnnouncementDto announcement, [FromRoute] int id)
         {
             var result = await _announcementService.UpdateAnnouncement(announcement, id);
@@ -82,6 +85,7 @@ namespace cityScope.NET.Server.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
+        [Authorize]
         public async Task<ActionResult> Delete(int id)
         {
             var result = await _announcementService.DeleteAnnouncement(id);

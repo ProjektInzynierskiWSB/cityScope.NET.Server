@@ -16,16 +16,18 @@ namespace cityScope.NET.Server.UnitTest.AnnouncementTests
     public class CreateAnnouncementTest
     {
         private readonly Mock<IAnnouncementRepository> _mockRepository;
+        private readonly Mock<IUserService> _mockUserService;
 
         public CreateAnnouncementTest()
         {
             _mockRepository = RepositoryMocks.GetAnnouncementRepository();
+            _mockUserService = RepositoryMocks.GetUserService();
         }
 
         [Fact]
         public async Task ValidAnnouncement_AddedToRepo()
         {
-            var hanlder = new AnnouncementService(_mockRepository.Object);
+            var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object);
             var allAnnouncementBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
             AnnouncementDto announcementDto = new()
             {
@@ -45,7 +47,7 @@ namespace cityScope.NET.Server.UnitTest.AnnouncementTests
         [Fact]
         public async Task Not_ValidAnnouncement_TooLongTitle_101_Characters_NotAddedToRepo()
         {
-            var hanlder = new AnnouncementService(_mockRepository.Object);
+            var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object);
             var allAnnouncementBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
 
             AnnouncementDto announcementDto = new()
@@ -66,7 +68,7 @@ namespace cityScope.NET.Server.UnitTest.AnnouncementTests
         [Fact]
         public async Task Not_ValidAnnouncement_TooLongDescription_1001_Characters_NotAddedToRepo()
         {
-            var hanlder = new AnnouncementService(_mockRepository.Object);
+            var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object);
             var allAnnouncementBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
 
             AnnouncementDto announcementDto = new()
@@ -87,7 +89,7 @@ namespace cityScope.NET.Server.UnitTest.AnnouncementTests
         [Fact]
         public async Task Not_ValidAnnouncement_PriceNotValid_NotAddedToRepo()
         {
-            var hanlder = new AnnouncementService(_mockRepository.Object);
+            var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object);
             var allAnnouncementBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
 
             AnnouncementDto announcementDto = new()
