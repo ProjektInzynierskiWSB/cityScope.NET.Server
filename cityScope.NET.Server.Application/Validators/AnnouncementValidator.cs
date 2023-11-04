@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace cityScope.NET.Server.Application.Validators
 {
-    public class AnnouncementValidator : AbstractValidator<AnnouncementDto>
+    public class AnnouncementValidator : AbstractValidator<AddAnnouncementDto>
     {
         public AnnouncementValidator()
         {
