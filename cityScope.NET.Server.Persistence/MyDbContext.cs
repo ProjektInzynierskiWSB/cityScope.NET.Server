@@ -47,7 +47,6 @@ namespace cityScope.NET.Server.Persistence
 
             modelBuilder.Entity<Announcement>()
                 .HasData(dataGenerator.Announcements);
-
         }
     }
 }
