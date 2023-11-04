@@ -31,4 +31,10 @@
     <ProjectReference Include="..\cityScope.NET.Server.Application\cityScope.NET.Server.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Helpers\Photo\table.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

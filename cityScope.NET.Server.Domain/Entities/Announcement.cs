@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace cityScope.NET.Server.Domain.Entities
+﻿namespace cityScope.NET.Server.Domain.Entities
 {
     public class Announcement : AuditableEntity
     {
@@ -13,6 +7,7 @@ namespace cityScope.NET.Server.Domain.Entities
         public string Description { get; set; } = string.Empty;
         public decimal Price { get; set; }
         public int UserId { get; set; }
-        public User User { get; set; } 
+        public User User { get; set; }
+        public string? UrlImage { get; set; }
     }
 }

@@ -17,17 +17,19 @@ namespace cityScope.NET.Server.UnitTest.AnnouncementTests
     {
         private readonly Mock<IAnnouncementRepository> _mockRepository;
         private readonly Mock<IUserService> _mockUserService;
+        private readonly Mock<IPhotosService> _mockPhotosService;
 
         public DeleteAnnouncementTest()
         {
             _mockRepository = RepositoryMocks.GetAnnouncementRepository();
             _mockUserService = RepositoryMocks.GetUserService();
+            _mockPhotosService = RepositoryMocks.GetPhotosService();
         }
 
         [Fact]
         public async Task ValidAnnouncement_DeletedFromRepo()
         {
-            var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object);
+            var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object, _mockPhotosService.Object);
             var allAnnouncementBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
 
             var response = await hanlder.DeleteAnnouncement(1);
@@ -41,7 +43,7 @@ namespace cityScope.NET.Server.UnitTest.AnnouncementTests
         [Fact]
         public async Task NotValidAnnouncement_DiffrentUserId_NotDeletedFromRepo()
         {
-            var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object);
+            var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object, _mockPhotosService.Object);
             var allAnnouncementBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
 
             var response = await hanlder.DeleteAnnouncement(6);

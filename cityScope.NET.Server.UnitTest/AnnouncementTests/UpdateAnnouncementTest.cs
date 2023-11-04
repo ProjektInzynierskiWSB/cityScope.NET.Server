@@ -17,19 +17,21 @@ namespace cityScope.NET.Server.UnitTest.AnnouncementTests
     {
         private readonly Mock<IAnnouncementRepository> _mockRepository;
         private readonly Mock<IUserService> _mockUserService;
+        private readonly Mock<IPhotosService> _mockPhotosService;
 
         public UpdateAnnouncementTest()
         {
             _mockRepository = RepositoryMocks.GetAnnouncementRepository();
             _mockUserService = RepositoryMocks.GetUserService();
+            _mockPhotosService = RepositoryMocks.GetPhotosService();
         }
 
         [Fact]
         public async Task Valid_UpdateAnnouncement_UpdateInRepo()
         {
-            var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object);
+            var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object, _mockPhotosService.Object);
             var allAnnouncementBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
-            AnnouncementDto announcementDto = new()
+            AddAnnouncementDto announcementDto = new()
             {
                 Title = "Testvalid",
                 Description = "TestValid",
@@ -48,9 +50,9 @@ namespace cityScope.NET.Server.UnitTest.AnnouncementTests
         [Fact]
         public async Task Not_Valid_UpdateAnnouncementTooLongTitle_101_NotUpdateInRepo()
         {
-            var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object);
+            var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object, _mockPhotosService.Object);
             var allAnnouncementBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
-            AnnouncementDto announcementDto = new()
+            AddAnnouncementDto announcementDto = new()
             {
                 Title = new string('*', 101),
                 Description = "TestValid",
@@ -69,9 +71,9 @@ namespace cityScope.NET.Server.UnitTest.AnnouncementTests
         [Fact]
         public async Task Not_Valid_UpdateAnnouncementTooLongDescription_1001_NotUpdateInRepo()
         {
-            var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object);
+            var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object, _mockPhotosService.Object);
             var allAnnouncementBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
-            AnnouncementDto announcementDto = new()
+            AddAnnouncementDto announcementDto = new()
             {
                 Title = "TestValid",
                 Description = new string('*', 1001),
@@ -90,9 +92,9 @@ namespace cityScope.NET.Server.UnitTest.AnnouncementTests
         [Fact]
         public async Task Not_Valid_UpdateAnnouncementPriceNotValid_NotUpdateInRepo()
         {
-            var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object);
+            var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object, _mockPhotosService.Object);
             var allAnnouncementBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
-            AnnouncementDto announcementDto = new()
+            AddAnnouncementDto announcementDto = new()
             {
                 Title = "TestValid",
                 Description = "TestValid",
@@ -111,10 +113,10 @@ namespace cityScope.NET.Server.UnitTest.AnnouncementTests
         [Fact]
         public async Task NotValid_UpdateAnnouncemet_DiffrentUserId_NotUpdateInRepo()
         {
-            var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object);
+            var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object, _mockPhotosService.Object);
 
             var allAnnouncementBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
-            AnnouncementDto announcementDto = new()
+            AddAnnouncementDto announcementDto = new()
             {
                 Title = "TestValid",
                 Description = "TestValid",

@@ -1,14 +1,10 @@
-﻿using cityScope.NET.Server.Application.Dtos;
+﻿using cityScope.NET.Server.Application.Blob;
+using cityScope.NET.Server.Application.Dtos;
 using cityScope.NET.Server.Application.Interfaces;
 using cityScope.NET.Server.Application.Response;
 using cityScope.NET.Server.Application.Services.Interfaces;
 using cityScope.NET.Server.Application.Validators;
 using cityScope.NET.Server.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace cityScope.NET.Server.Application.Services
 {
@@ -16,13 +12,16 @@ namespace cityScope.NET.Server.Application.Services
     {
         private readonly IAnnouncementRepository _announcementRepository;
         private readonly IUserService _userService;
-        public AnnouncementService(IAnnouncementRepository announcementRepository, IUserService userService)
+        private readonly IPhotosService _photosService;
+
+        public AnnouncementService(IAnnouncementRepository announcementRepository, IUserService userService, IPhotosService photosService)
         {
             _announcementRepository = announcementRepository;
             _userService = userService;
+            _photosService = photosService;
         }
 
-        public async Task<BaseResponse<int>> AddAnnouncement(AnnouncementDto dto)
+        public async Task<BaseResponse<int>> AddAnnouncement(AddAnnouncementDto dto)
         {
             BaseResponse<int> response = new();
             int userId = _userService.GetUserId();
@@ -31,21 +30,26 @@ namespace cityScope.NET.Server.Application.Services
             if (validadorResult.IsValid)
             {
                 Announcement announcement = new();
+                if (dto.Image != null)
+                {
+                    var blobResponse = await _photosService.UploadImage(dto.Image);
+                    announcement.UrlImage = blobResponse.Blob.Uri;
+                }
                 announcement.Price = dto.Price;
                 announcement.Description = dto.Description;
                 announcement.Title = dto.Title;
                 announcement.UserId = userId;
+
                 var result = await _announcementRepository.AddAsync(announcement);
                 response.Data = result.Id;
                 response.Message = "Added succesfully";
 
                 return response;
             }
-
             response.Data = 0;
             response.Success = false;
             response.Message = string.Join(", ", validadorResult.Errors);
-            return response;                        
+            return response;
         }
 
         public async Task<BaseResponse<bool>> DeleteAnnouncement(int id)
@@ -85,6 +89,7 @@ namespace cityScope.NET.Server.Application.Services
                 dto.Description = item.Description;
                 dto.Price = item.Price;
                 dto.CreatedDate = item.CreatedDate;
+                dto.ImageUrl = item.UrlImage;
                 list.Add(dto);
             }
             response.Data = list;
@@ -110,6 +115,7 @@ namespace cityScope.NET.Server.Application.Services
             dto.Price = result.Price;
             dto.CreatedDate = result.CreatedDate;
             dto.UserId = result.UserId;
+            dto.ImageUrl = result.UrlImage;
 
             response.Data = dto;
             return response;
@@ -141,6 +147,7 @@ namespace cityScope.NET.Server.Application.Services
                     Price = item.Price,
                     CreatedDate = item.CreatedDate,
                     UserId = item.UserId,
+                    ImageUrl = item.UrlImage
                 };
                 dtoList.Add(dto);
             }
@@ -153,7 +160,7 @@ namespace cityScope.NET.Server.Application.Services
             return response;
         }
 
-        public async Task<BaseResponse<bool>> UpdateAnnouncement(AnnouncementDto dto, int id)
+        public async Task<BaseResponse<bool>> UpdateAnnouncement(AddAnnouncementDto dto, int id)
         {
             BaseResponse<bool> response = new();
             var result = await _announcementRepository.GetByIdAsync(id);
@@ -169,6 +176,11 @@ namespace cityScope.NET.Server.Application.Services
             var validadorResult = await validator.ValidateAsync(dto);
             if (validadorResult.IsValid && result.UserId == userId)
             {
+                if (dto.Image != null)
+                {
+                    var blobResponse = await _photosService.UploadImage(dto.Image);
+                    result.UrlImage = blobResponse.Blob.Uri;
+                }
                 result.Price = dto.Price;
                 result.Description = dto.Description;
                 result.Title = dto.Title;

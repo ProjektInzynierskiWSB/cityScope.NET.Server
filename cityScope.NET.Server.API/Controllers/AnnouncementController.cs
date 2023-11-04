@@ -14,13 +14,16 @@ namespace cityScope.NET.Server.API.Controllers
     public class AnnouncementController : ControllerBase
     {
         private readonly IAnnouncementService _announcementService;
+        private readonly IWebHostEnvironment _environment;
 
-        public AnnouncementController(IAnnouncementService announcementService)
+        public AnnouncementController(IAnnouncementService announcementService, IWebHostEnvironment environment)
         {
             _announcementService = announcementService;
+            _environment = environment;
         }
 
         [HttpGet(Name = "GetAllAnnouncements")]
+        [Authorize]
         public async Task<ActionResult<BaseResponse<List<AnnouncementDto>>>> GetAllAnnouncements()
         {
             var result = await _announcementService.GetAllAsync();
@@ -55,13 +58,14 @@ namespace cityScope.NET.Server.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
         [Authorize]
-        public async Task<ActionResult<BaseResponse<int>>> AddAnnouncement([FromBody] AnnouncementDto announcement)
+        public async Task<ActionResult<BaseResponse<int>>> AddAnnouncement([FromForm] AddAnnouncementDto announcement)
         {
             var result = await _announcementService.AddAnnouncement(announcement);
             if (result.Success == false) 
             {
                 return BadRequest(result);
             }
+
             return Ok(result);
         }
 
@@ -70,7 +74,7 @@ namespace cityScope.NET.Server.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
         [Authorize]
-        public async Task<ActionResult<bool>> UpdateAnnouncement([FromBody] AnnouncementDto announcement, [FromRoute] int id)
+        public async Task<ActionResult<bool>> UpdateAnnouncement([FromBody] AddAnnouncementDto announcement, [FromRoute] int id)
         {
             var result = await _announcementService.UpdateAnnouncement(announcement, id);
             if (result.Success == false) 
@@ -95,5 +99,51 @@ namespace cityScope.NET.Server.API.Controllers
             }
             return Ok(result); 
         }
+
+        [NonAction]
+        private async Task<bool> SaveImages(List<IFormFile> images, int announcementId)
+        {
+            bool success = false;
+            try
+            {
+                foreach (IFormFile item in images)
+                {
+                    string fileName = item.FileName;
+                    string filePath = GetFilePath(fileName, announcementId);
+
+                    if (!System.IO.Directory.Exists(filePath))
+                    {
+                        System.IO.Directory.CreateDirectory(filePath);
+                    }
+
+                    string imagePath = filePath + announcementId.ToString() + "\\image.png";
+
+                    if (System.IO.File.Exists(imagePath))
+                    {
+                        System.IO.File.Delete(imagePath);
+                    }
+
+                    await using (var stream = new FileStream(imagePath, FileMode.Create))
+                    {
+                        await item.OpenReadStream().CopyToAsync(stream);
+                    }
+                }
+
+                success = true;
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return success;
+        }
+
+        [NonAction]
+        private string GetFilePath(string fileName, int announcementId)
+        {
+            return _environment.WebRootPath + "\\Uploads\\Announcement\\" + announcementId + "\\" + fileName;
+        }
+
     }
 }

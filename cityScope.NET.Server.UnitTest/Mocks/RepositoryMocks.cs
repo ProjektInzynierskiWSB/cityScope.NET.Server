@@ -1,6 +1,7 @@
 ﻿using cityScope.NET.Server.Application.Interfaces;
 using cityScope.NET.Server.Application.Services.Interfaces;
 using cityScope.NET.Server.Domain.Entities;
+using Microsoft.AspNetCore.Http;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,20 @@ namespace cityScope.NET.Server.UnitTest.Mocks
 {
     public class RepositoryMocks
     {
+        public static Mock<IPhotosService> GetPhotosService()
+        {
+            var mockPhotosService = new Mock<IPhotosService>();
+            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Helpers\Photo\table.jpg");
+
+            // Tworzenie przykładowego obiektu IFormFile na podstawie pliku
+            var fileBytes = File.ReadAllBytes(filePath);
+            var fileStream = new MemoryStream(fileBytes);
+            IFormFile file = new FormFile(fileStream, 0, fileBytes.Length, "table.jpg", "table.jpg");
+
+            mockPhotosService.Setup(repo => repo.UploadImage(file));
+
+            return mockPhotosService;
+        }
         public static Mock<IUserService> GetUserService()
         {
             var mockUserService = new Mock<IUserService>();

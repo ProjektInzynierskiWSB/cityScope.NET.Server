@@ -1,11 +1,6 @@
 ﻿using Bogus;
 using cityScope.NET.Server.Application.Helpers;
 using cityScope.NET.Server.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace cityScope.NET.Server.Persistence.DummyData
 {
@@ -13,6 +8,12 @@ namespace cityScope.NET.Server.Persistence.DummyData
     {
         public List<Announcement> Announcements = new();
         public List<User> Users = new();
+        private List<string> PhotoUrls = new()
+        {
+            "https://blobinz.blob.core.windows.net/images/ksiazka.jpg",
+            "https://blobinz.blob.core.windows.net/images/table.jpg",
+            "https://blobinz.blob.core.windows.net/images/tv.jpg"
+        };
         public DataGenerator()
         {
             Seed();
@@ -38,9 +39,11 @@ namespace cityScope.NET.Server.Persistence.DummyData
                 .RuleFor(a => a.Description, f => f.Commerce.ProductDescription())
                 .RuleFor(a => a.LastModifiedDate, f => DateTime.Now)
                 .RuleFor(a => a.UserId, _ => 1)
-                .RuleFor(a => a.Price, f => Math.Round(f.Random.Decimal(10,10000),2));
+                .RuleFor(a => a.Price, f => Math.Round(f.Random.Decimal(10, 10000), 2))
+                .RuleFor(a => a.UrlImage, f => f.PickRandom(PhotoUrls));
             var listAnnouncement = annoucementGenerator.Generate(10);
             Announcements.AddRange(listAnnouncement);
+
         }
     }
 }
