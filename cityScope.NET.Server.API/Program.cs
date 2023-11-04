@@ -1,14 +1,13 @@
+using cityScope.NET.Server.Application.Blob;
 using cityScope.NET.Server.Application.Interfaces;
 using cityScope.NET.Server.Application.Services;
 using cityScope.NET.Server.Application.Services.Interfaces;
 using cityScope.NET.Server.Persistence;
-using cityScope.NET.Server.Persistence.DummyData;
 using cityScope.NET.Server.Persistence.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,6 +46,7 @@ builder.Services.AddSwaggerGen(option =>
             new string[]{}
         }
     });
+    option.OperationFilter<FileUploadFilter>();
 });
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddDbContext<MyDbContext>(options => options.UseMySQL(builder.Configuration.GetConnectionString("CityScopeConnectionString")));
@@ -55,7 +55,9 @@ builder.Services.AddScoped<IAnnouncementRepository, AnnouncementRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAnnouncementService, AnnouncementService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IPhotosService, PhotosService>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.Configure<StorageAccountOptions>(builder.Configuration.GetSection("StorageAccount"));
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -83,7 +85,7 @@ if (app.Environment.IsDevelopment())
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "cityScope API");
     });
 }
-
+app.UseCors();
 app.UseHttpsRedirection();
 
 app.UseRouting();
@@ -93,4 +95,13 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+try
+{
+    app.Run();
+}
+catch (Exception)
+{
+
+    throw;
+}
+
