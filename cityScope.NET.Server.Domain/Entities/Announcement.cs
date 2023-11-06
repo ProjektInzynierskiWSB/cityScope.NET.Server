@@ -8,6 +8,8 @@
         public decimal Price { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
+        public int? MainCategoryId { get; set; }
+        public MainCategory MainCategory { get; set; }
         public string? UrlImage { get; set; }
     }
 }
