@@ -10,5 +10,6 @@ public class AddAnnouncementDto
     public int UserId { get; set; }
     public DateTime CreatedDate { get; set; }
     public IFormFile Image { get; set; }
+    public int MainCategoryId { get; set; }
 
 }
