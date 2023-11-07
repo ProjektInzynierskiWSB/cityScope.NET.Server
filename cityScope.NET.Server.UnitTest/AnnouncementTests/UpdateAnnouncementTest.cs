@@ -5,131 +5,128 @@ using cityScope.NET.Server.Application.Services.Interfaces;
 using cityScope.NET.Server.UnitTest.Mocks;
 using Moq;
 using Shouldly;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace cityScope.NET.Server.UnitTest.AnnouncementTests
+namespace cityScope.NET.Server.UnitTest.AnnouncementTests;
+
+public class UpdateAnnouncementTest
 {
-    public class UpdateAnnouncementTest
+    private readonly Mock<IAnnouncementRepository> _mockRepository;
+    private readonly Mock<IUserService> _mockUserService;
+    private readonly Mock<IPhotosService> _mockPhotosService;
+    private readonly Mock<IMainCategoryService> _mockMainCategoriesService;
+
+    public UpdateAnnouncementTest()
     {
-        private readonly Mock<IAnnouncementRepository> _mockRepository;
-        private readonly Mock<IUserService> _mockUserService;
-        private readonly Mock<IPhotosService> _mockPhotosService;
+        _mockRepository = RepositoryMocks.GetAnnouncementRepository();
+        _mockUserService = RepositoryMocks.GetUserService();
+        _mockPhotosService = RepositoryMocks.GetPhotosService();
+        _mockMainCategoriesService = RepositoryMocks.GetMainCategoryService();
+    }
 
-        public UpdateAnnouncementTest()
+    [Fact]
+    public async Task Valid_UpdateAnnouncement_UpdateInRepo()
+    {
+        var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object, _mockPhotosService.Object, _mockMainCategoriesService.Object);
+        var allAnnouncementBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
+        AddAnnouncementDto announcementDto = new()
         {
-            _mockRepository = RepositoryMocks.GetAnnouncementRepository();
-            _mockUserService = RepositoryMocks.GetUserService();
-            _mockPhotosService = RepositoryMocks.GetPhotosService();
-        }
+            Title = "Testvalid",
+            Description = "TestValid",
+            Price = 11.99m,
+            MainCategoryId = 1
+        };
 
-        [Fact]
-        public async Task Valid_UpdateAnnouncement_UpdateInRepo()
+        var response = await hanlder.UpdateAnnouncement(announcementDto, 1);
+
+        var allAfter = await _mockRepository.Object.GetAllAsync();
+
+        response.Success.ShouldBe(true);
+        response.Data.ShouldBe(true);
+        allAfter.Count.ShouldBe(allAnnouncementBeforeCount);
+    }
+
+    [Fact]
+    public async Task Not_Valid_UpdateAnnouncementTooLongTitle_101_NotUpdateInRepo()
+    {
+        var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object, _mockPhotosService.Object, _mockMainCategoriesService.Object);
+        var allAnnouncementBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
+        AddAnnouncementDto announcementDto = new()
         {
-            var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object, _mockPhotosService.Object);
-            var allAnnouncementBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
-            AddAnnouncementDto announcementDto = new()
-            {
-                Title = "Testvalid",
-                Description = "TestValid",
-                Price = 11.99m
-            };
+            Title = new string('*', 101),
+            Description = "TestValid",
+            Price = 11.99m
+        };
 
-            var response = await hanlder.UpdateAnnouncement(announcementDto, 1);
+        var response = await hanlder.UpdateAnnouncement(announcementDto, 1);
 
-            var allAfter = await _mockRepository.Object.GetAllAsync();
+        var allAfter = await _mockRepository.Object.GetAllAsync();
 
-            response.Success.ShouldBe(true);
-            response.Data.ShouldBe(true);
-            allAfter.Count.ShouldBe(allAnnouncementBeforeCount);
-        }
+        response.Success.ShouldBe(false);
+        response.Data.ShouldBe(false);
+        allAfter.Count.ShouldBe(allAnnouncementBeforeCount);
+    }
 
-        [Fact]
-        public async Task Not_Valid_UpdateAnnouncementTooLongTitle_101_NotUpdateInRepo()
+    [Fact]
+    public async Task Not_Valid_UpdateAnnouncementTooLongDescription_1001_NotUpdateInRepo()
+    {
+        var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object, _mockPhotosService.Object, _mockMainCategoriesService.Object);
+        var allAnnouncementBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
+        AddAnnouncementDto announcementDto = new()
         {
-            var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object, _mockPhotosService.Object);
-            var allAnnouncementBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
-            AddAnnouncementDto announcementDto = new()
-            {
-                Title = new string('*', 101),
-                Description = "TestValid",
-                Price = 11.99m
-            };
+            Title = "TestValid",
+            Description = new string('*', 1001),
+            Price = 11.99m
+        };
 
-            var response = await hanlder.UpdateAnnouncement(announcementDto, 1);
+        var response = await hanlder.UpdateAnnouncement(announcementDto, 1);
 
-            var allAfter = await _mockRepository.Object.GetAllAsync();
+        var allAfter = await _mockRepository.Object.GetAllAsync();
 
-            response.Success.ShouldBe(false);
-            response.Data.ShouldBe(false);
-            allAfter.Count.ShouldBe(allAnnouncementBeforeCount);
-        }
+        response.Success.ShouldBe(false);
+        response.Data.ShouldBe(false);
+        allAfter.Count.ShouldBe(allAnnouncementBeforeCount);
+    }
 
-        [Fact]
-        public async Task Not_Valid_UpdateAnnouncementTooLongDescription_1001_NotUpdateInRepo()
+    [Fact]
+    public async Task Not_Valid_UpdateAnnouncementPriceNotValid_NotUpdateInRepo()
+    {
+        var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object, _mockPhotosService.Object, _mockMainCategoriesService.Object);
+        var allAnnouncementBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
+        AddAnnouncementDto announcementDto = new()
         {
-            var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object, _mockPhotosService.Object);
-            var allAnnouncementBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
-            AddAnnouncementDto announcementDto = new()
-            {
-                Title = "TestValid",
-                Description = new string('*', 1001),
-                Price = 11.99m
-            };
+            Title = "TestValid",
+            Description = "TestValid",
+            Price = 11.9999m
+        };
 
-            var response = await hanlder.UpdateAnnouncement(announcementDto, 1);
+        var response = await hanlder.UpdateAnnouncement(announcementDto, 1);
 
-            var allAfter = await _mockRepository.Object.GetAllAsync();
+        var allAfter = await _mockRepository.Object.GetAllAsync();
 
-            response.Success.ShouldBe(false);
-            response.Data.ShouldBe(false);
-            allAfter.Count.ShouldBe(allAnnouncementBeforeCount);
-        }
+        response.Success.ShouldBe(false);
+        response.Data.ShouldBe(false);
+        allAfter.Count.ShouldBe(allAnnouncementBeforeCount);
+    }
 
-        [Fact]
-        public async Task Not_Valid_UpdateAnnouncementPriceNotValid_NotUpdateInRepo()
+    [Fact]
+    public async Task NotValid_UpdateAnnouncemet_DiffrentUserId_NotUpdateInRepo()
+    {
+        var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object, _mockPhotosService.Object, _mockMainCategoriesService.Object);
+
+        var allAnnouncementBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
+        AddAnnouncementDto announcementDto = new()
         {
-            var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object, _mockPhotosService.Object);
-            var allAnnouncementBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
-            AddAnnouncementDto announcementDto = new()
-            {
-                Title = "TestValid",
-                Description = "TestValid",
-                Price = 11.9999m
-            };
+            Title = "TestValid",
+            Description = "TestValid",
+            Price = 11.99m
+        };
 
-            var response = await hanlder.UpdateAnnouncement(announcementDto, 1);
+        var response = await hanlder.UpdateAnnouncement(announcementDto, 6);
 
-            var allAfter = await _mockRepository.Object.GetAllAsync();
+        var allAfter = await _mockRepository.Object.GetAllAsync();
 
-            response.Success.ShouldBe(false);
-            response.Data.ShouldBe(false);
-            allAfter.Count.ShouldBe(allAnnouncementBeforeCount);
-        }
-
-        [Fact]
-        public async Task NotValid_UpdateAnnouncemet_DiffrentUserId_NotUpdateInRepo()
-        {
-            var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object, _mockPhotosService.Object);
-
-            var allAnnouncementBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
-            AddAnnouncementDto announcementDto = new()
-            {
-                Title = "TestValid",
-                Description = "TestValid",
-                Price = 11.99m
-            };
-
-            var response = await hanlder.UpdateAnnouncement(announcementDto, 6);
-
-            var allAfter = await _mockRepository.Object.GetAllAsync();
-
-            response.Success.ShouldBe(false);
-            response.Data.ShouldBe(false);
-            allAfter.Count.ShouldBe(allAnnouncementBeforeCount);
-        }
+        response.Success.ShouldBe(false);
+        response.Data.ShouldBe(false);
+        allAfter.Count.ShouldBe(allAnnouncementBeforeCount);
     }
 }

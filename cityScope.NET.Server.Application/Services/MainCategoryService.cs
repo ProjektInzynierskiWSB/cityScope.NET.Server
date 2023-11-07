@@ -38,4 +38,22 @@ public class MainCategoryService : IMainCategoryService
 		response.Success = true;
 		return response;
 	}
+
+	public async Task<BaseResponse<bool>> IsIdExist(int id)
+	{
+		BaseResponse<bool> response = new();
+
+		var result = await _mainCategoryRepository.GetByIdAsync(id);
+
+		if (result != null)
+		{
+			response.Success = true;
+			response.Data = true;
+			return response;
+		}
+		response.Success = false;
+		response.Data = false;
+		response.Message = "Category not exist";
+		return response;
+	}
 }
