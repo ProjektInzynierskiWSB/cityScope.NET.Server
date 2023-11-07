@@ -17,6 +17,7 @@ namespace cityScope.NET.Server.Persistence
 
         public DbSet<User> Users { get; set; }
         public DbSet<Announcement> Announcements { get; set; }
+        public DbSet<MainCategory> MainCategory { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
@@ -44,6 +45,9 @@ namespace cityScope.NET.Server.Persistence
 
             modelBuilder.Entity<User>()
                 .HasData(dataGenerator.Users);
+
+            modelBuilder.Entity<MainCategory>()
+                .HasData(dataGenerator.MainCategories);
 
             modelBuilder.Entity<Announcement>()
                 .HasData(dataGenerator.Announcements);

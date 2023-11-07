@@ -32,6 +32,11 @@ namespace cityScope.NET.Server.Application.Validators
                 .NotNull()
                 .PrecisionScale(10, 2, false)
                 .WithMessage("{PropertyName} must not be more than 10 digits in total, with allowance for 2 decimals");
+
+            RuleFor(a => a.MainCategoryId)
+                .NotEmpty()
+                .WithMessage("{PropertyName} is required")
+                .NotNull();
         }
     }
 }

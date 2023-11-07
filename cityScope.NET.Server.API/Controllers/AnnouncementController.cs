@@ -1,10 +1,7 @@
 ﻿using cityScope.NET.Server.Application.Dtos;
-using cityScope.NET.Server.Application.Interfaces;
 using cityScope.NET.Server.Application.Response;
 using cityScope.NET.Server.Application.Services.Interfaces;
-using cityScope.NET.Server.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cityScope.NET.Server.API.Controllers
@@ -14,12 +11,10 @@ namespace cityScope.NET.Server.API.Controllers
     public class AnnouncementController : ControllerBase
     {
         private readonly IAnnouncementService _announcementService;
-        private readonly IWebHostEnvironment _environment;
 
-        public AnnouncementController(IAnnouncementService announcementService, IWebHostEnvironment environment)
+        public AnnouncementController(IAnnouncementService announcementService)
         {
             _announcementService = announcementService;
-            _environment = environment;
         }
 
         [HttpGet(Name = "GetAllAnnouncements")]
@@ -61,7 +56,7 @@ namespace cityScope.NET.Server.API.Controllers
         public async Task<ActionResult<BaseResponse<int>>> AddAnnouncement([FromForm] AddAnnouncementDto announcement)
         {
             var result = await _announcementService.AddAnnouncement(announcement);
-            if (result.Success == false) 
+            if (result.Success == false)
             {
                 return BadRequest(result);
             }
@@ -77,7 +72,7 @@ namespace cityScope.NET.Server.API.Controllers
         public async Task<ActionResult<bool>> UpdateAnnouncement([FromBody] AddAnnouncementDto announcement, [FromRoute] int id)
         {
             var result = await _announcementService.UpdateAnnouncement(announcement, id);
-            if (result.Success == false) 
+            if (result.Success == false)
             {
                 return NotFound();
             }
@@ -85,7 +80,7 @@ namespace cityScope.NET.Server.API.Controllers
         }
 
         //in future change for soft delete 
-        [HttpDelete("{id}", Name ="Delete")]
+        [HttpDelete("{id}", Name = "Delete")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
@@ -97,53 +92,7 @@ namespace cityScope.NET.Server.API.Controllers
             {
                 return NotFound();
             }
-            return Ok(result); 
+            return Ok(result);
         }
-
-        [NonAction]
-        private async Task<bool> SaveImages(List<IFormFile> images, int announcementId)
-        {
-            bool success = false;
-            try
-            {
-                foreach (IFormFile item in images)
-                {
-                    string fileName = item.FileName;
-                    string filePath = GetFilePath(fileName, announcementId);
-
-                    if (!System.IO.Directory.Exists(filePath))
-                    {
-                        System.IO.Directory.CreateDirectory(filePath);
-                    }
-
-                    string imagePath = filePath + announcementId.ToString() + "\\image.png";
-
-                    if (System.IO.File.Exists(imagePath))
-                    {
-                        System.IO.File.Delete(imagePath);
-                    }
-
-                    await using (var stream = new FileStream(imagePath, FileMode.Create))
-                    {
-                        await item.OpenReadStream().CopyToAsync(stream);
-                    }
-                }
-
-                success = true;
-            }
-            catch (Exception ex)
-            {
-
-            }
-
-            return success;
-        }
-
-        [NonAction]
-        private string GetFilePath(string fileName, int announcementId)
-        {
-            return _environment.WebRootPath + "\\Uploads\\Announcement\\" + announcementId + "\\" + fileName;
-        }
-
     }
 }

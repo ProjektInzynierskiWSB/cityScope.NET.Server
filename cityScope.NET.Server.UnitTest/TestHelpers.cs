@@ -1,11 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace cityScope.NET.Server.UnitTest
 {
@@ -24,7 +19,7 @@ namespace cityScope.NET.Server.UnitTest
         {
             var mockHttpContext = new Mock<IHttpContextAccessor>();
             var context = new DefaultHttpContext();
-            mockHttpContext.Setup(c => c .HttpContext).Returns(context);
+            mockHttpContext.Setup(c => c.HttpContext).Returns(context);
 
             return mockHttpContext.Object;
         }

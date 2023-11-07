@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using cityScope.NET.Server.Persistence;
 
@@ -10,9 +11,11 @@ using cityScope.NET.Server.Persistence;
 namespace cityScope.NET.Server.Persistence.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231106112458_add-Categories")]
+    partial class addCategories
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,7 +39,7 @@ namespace cityScope.NET.Server.Persistence.Migrations
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("MainCategoryId")
+                    b.Property<int?>("MainCategoryId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
@@ -66,121 +69,121 @@ namespace cityScope.NET.Server.Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2023, 11, 6, 13, 28, 11, 711, DateTimeKind.Local).AddTicks(3050),
-                            Description = "Carbonite web goalkeeper gloves are ergonomically designed to give easy fit",
-                            LastModifiedDate = new DateTime(2023, 11, 6, 13, 28, 11, 711, DateTimeKind.Local).AddTicks(3333),
-                            MainCategoryId = 4,
-                            Price = 9876.39m,
-                            Title = "Handmade Soft Table",
-                            UrlImage = "https://blobinz.blob.core.windows.net/images/table.jpg",
+                            CreatedDate = new DateTime(2023, 11, 6, 12, 24, 58, 654, DateTimeKind.Local).AddTicks(7699),
+                            Description = "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
+                            LastModifiedDate = new DateTime(2023, 11, 6, 12, 24, 58, 654, DateTimeKind.Local).AddTicks(8046),
+                            MainCategoryId = 10,
+                            Price = 3593.49m,
+                            Title = "Small Wooden Gloves",
+                            UrlImage = "https://blobinz.blob.core.windows.net/images/ksiazka.jpg",
                             UserId = 1
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2023, 11, 6, 13, 28, 11, 711, DateTimeKind.Local).AddTicks(5055),
-                            Description = "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
-                            LastModifiedDate = new DateTime(2023, 11, 6, 13, 28, 11, 711, DateTimeKind.Local).AddTicks(5132),
-                            MainCategoryId = 1,
-                            Price = 9395.44m,
-                            Title = "Generic Cotton Chair",
-                            UrlImage = "https://blobinz.blob.core.windows.net/images/ksiazka.jpg",
+                            CreatedDate = new DateTime(2023, 11, 6, 12, 24, 58, 655, DateTimeKind.Local).AddTicks(588),
+                            Description = "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
+                            LastModifiedDate = new DateTime(2023, 11, 6, 12, 24, 58, 655, DateTimeKind.Local).AddTicks(667),
+                            MainCategoryId = 5,
+                            Price = 9562.12m,
+                            Title = "Awesome Wooden Car",
+                            UrlImage = "https://blobinz.blob.core.windows.net/images/table.jpg",
                             UserId = 1
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2023, 11, 6, 13, 28, 11, 711, DateTimeKind.Local).AddTicks(5157),
-                            Description = "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles",
-                            LastModifiedDate = new DateTime(2023, 11, 6, 13, 28, 11, 711, DateTimeKind.Local).AddTicks(5192),
-                            MainCategoryId = 3,
-                            Price = 811.27m,
-                            Title = "Incredible Concrete Chicken",
-                            UrlImage = "https://blobinz.blob.core.windows.net/images/ksiazka.jpg",
-                            UserId = 1
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CreatedDate = new DateTime(2023, 11, 6, 13, 28, 11, 711, DateTimeKind.Local).AddTicks(5207),
-                            Description = "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles",
-                            LastModifiedDate = new DateTime(2023, 11, 6, 13, 28, 11, 711, DateTimeKind.Local).AddTicks(5235),
-                            MainCategoryId = 3,
-                            Price = 9280.14m,
-                            Title = "Generic Granite Chicken",
+                            CreatedDate = new DateTime(2023, 11, 6, 12, 24, 58, 655, DateTimeKind.Local).AddTicks(701),
+                            Description = "Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals",
+                            LastModifiedDate = new DateTime(2023, 11, 6, 12, 24, 58, 655, DateTimeKind.Local).AddTicks(736),
+                            MainCategoryId = 4,
+                            Price = 4620.16m,
+                            Title = "Ergonomic Concrete Soap",
                             UrlImage = "https://blobinz.blob.core.windows.net/images/tv.jpg",
                             UserId = 1
                         },
                         new
                         {
+                            Id = 4,
+                            CreatedDate = new DateTime(2023, 11, 6, 12, 24, 58, 655, DateTimeKind.Local).AddTicks(754),
+                            Description = "The Football Is Good For Training And Recreational Purposes",
+                            LastModifiedDate = new DateTime(2023, 11, 6, 12, 24, 58, 655, DateTimeKind.Local).AddTicks(790),
+                            MainCategoryId = 10,
+                            Price = 5168.30m,
+                            Title = "Intelligent Cotton Pizza",
+                            UrlImage = "https://blobinz.blob.core.windows.net/images/table.jpg",
+                            UserId = 1
+                        },
+                        new
+                        {
                             Id = 5,
-                            CreatedDate = new DateTime(2023, 11, 6, 13, 28, 11, 711, DateTimeKind.Local).AddTicks(5250),
-                            Description = "The slim & simple Maple Gaming Keyboard from Dev Byte comes with a sleek body and 7- Color RGB LED Back-lighting for smart functionality",
-                            LastModifiedDate = new DateTime(2023, 11, 6, 13, 28, 11, 711, DateTimeKind.Local).AddTicks(5280),
-                            MainCategoryId = 6,
-                            Price = 7681.32m,
-                            Title = "Generic Wooden Computer",
-                            UrlImage = "https://blobinz.blob.core.windows.net/images/ksiazka.jpg",
+                            CreatedDate = new DateTime(2023, 11, 6, 12, 24, 58, 655, DateTimeKind.Local).AddTicks(806),
+                            Description = "The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive",
+                            LastModifiedDate = new DateTime(2023, 11, 6, 12, 24, 58, 655, DateTimeKind.Local).AddTicks(839),
+                            MainCategoryId = 8,
+                            Price = 1467.77m,
+                            Title = "Licensed Metal Hat",
+                            UrlImage = "https://blobinz.blob.core.windows.net/images/table.jpg",
                             UserId = 1
                         },
                         new
                         {
                             Id = 6,
-                            CreatedDate = new DateTime(2023, 11, 6, 13, 28, 11, 711, DateTimeKind.Local).AddTicks(5363),
+                            CreatedDate = new DateTime(2023, 11, 6, 12, 24, 58, 655, DateTimeKind.Local).AddTicks(856),
                             Description = "Carbonite web goalkeeper gloves are ergonomically designed to give easy fit",
-                            LastModifiedDate = new DateTime(2023, 11, 6, 13, 28, 11, 711, DateTimeKind.Local).AddTicks(5393),
-                            MainCategoryId = 5,
-                            Price = 2049.03m,
-                            Title = "Practical Steel Car",
+                            LastModifiedDate = new DateTime(2023, 11, 6, 12, 24, 58, 655, DateTimeKind.Local).AddTicks(888),
+                            MainCategoryId = 3,
+                            Price = 4743.74m,
+                            Title = "Handcrafted Fresh Bike",
                             UrlImage = "https://blobinz.blob.core.windows.net/images/ksiazka.jpg",
                             UserId = 1
                         },
                         new
                         {
                             Id = 7,
-                            CreatedDate = new DateTime(2023, 11, 6, 13, 28, 11, 711, DateTimeKind.Local).AddTicks(5408),
-                            Description = "New ABC 13 9370, 13.3, 5th Gen CoreA5-8250U, 8GB RAM, 256GB SSD, power UHD Graphics, OS 10 Home, OS Office A & J 2016",
-                            LastModifiedDate = new DateTime(2023, 11, 6, 13, 28, 11, 711, DateTimeKind.Local).AddTicks(5437),
-                            MainCategoryId = 10,
-                            Price = 9403.80m,
-                            Title = "Incredible Plastic Bacon",
-                            UrlImage = "https://blobinz.blob.core.windows.net/images/table.jpg",
+                            CreatedDate = new DateTime(2023, 11, 6, 12, 24, 58, 655, DateTimeKind.Local).AddTicks(904),
+                            Description = "The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive",
+                            LastModifiedDate = new DateTime(2023, 11, 6, 12, 24, 58, 655, DateTimeKind.Local).AddTicks(932),
+                            MainCategoryId = 3,
+                            Price = 4473.45m,
+                            Title = "Intelligent Soft Sausages",
+                            UrlImage = "https://blobinz.blob.core.windows.net/images/ksiazka.jpg",
                             UserId = 1
                         },
                         new
                         {
                             Id = 8,
-                            CreatedDate = new DateTime(2023, 11, 6, 13, 28, 11, 711, DateTimeKind.Local).AddTicks(5451),
-                            Description = "New ABC 13 9370, 13.3, 5th Gen CoreA5-8250U, 8GB RAM, 256GB SSD, power UHD Graphics, OS 10 Home, OS Office A & J 2016",
-                            LastModifiedDate = new DateTime(2023, 11, 6, 13, 28, 11, 711, DateTimeKind.Local).AddTicks(5484),
-                            MainCategoryId = 10,
-                            Price = 8985.97m,
-                            Title = "Ergonomic Metal Bike",
-                            UrlImage = "https://blobinz.blob.core.windows.net/images/table.jpg",
+                            CreatedDate = new DateTime(2023, 11, 6, 12, 24, 58, 655, DateTimeKind.Local).AddTicks(948),
+                            Description = "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+                            LastModifiedDate = new DateTime(2023, 11, 6, 12, 24, 58, 655, DateTimeKind.Local).AddTicks(976),
+                            MainCategoryId = 1,
+                            Price = 3223.27m,
+                            Title = "Sleek Granite Soap",
+                            UrlImage = "https://blobinz.blob.core.windows.net/images/ksiazka.jpg",
                             UserId = 1
                         },
                         new
                         {
                             Id = 9,
-                            CreatedDate = new DateTime(2023, 11, 6, 13, 28, 11, 711, DateTimeKind.Local).AddTicks(5498),
+                            CreatedDate = new DateTime(2023, 11, 6, 12, 24, 58, 655, DateTimeKind.Local).AddTicks(992),
                             Description = "The slim & simple Maple Gaming Keyboard from Dev Byte comes with a sleek body and 7- Color RGB LED Back-lighting for smart functionality",
-                            LastModifiedDate = new DateTime(2023, 11, 6, 13, 28, 11, 711, DateTimeKind.Local).AddTicks(5527),
-                            MainCategoryId = 4,
-                            Price = 5837.82m,
-                            Title = "Fantastic Wooden Keyboard",
-                            UrlImage = "https://blobinz.blob.core.windows.net/images/table.jpg",
+                            LastModifiedDate = new DateTime(2023, 11, 6, 12, 24, 58, 655, DateTimeKind.Local).AddTicks(1063),
+                            MainCategoryId = 1,
+                            Price = 3635.23m,
+                            Title = "Sleek Plastic Soap",
+                            UrlImage = "https://blobinz.blob.core.windows.net/images/ksiazka.jpg",
                             UserId = 1
                         },
                         new
                         {
                             Id = 10,
-                            CreatedDate = new DateTime(2023, 11, 6, 13, 28, 11, 711, DateTimeKind.Local).AddTicks(5541),
-                            Description = "The beautiful range of Apple Naturalé that has an exciting mix of natural ingredients. With the Goodness of 100% Natural Ingredients",
-                            LastModifiedDate = new DateTime(2023, 11, 6, 13, 28, 11, 711, DateTimeKind.Local).AddTicks(5570),
-                            MainCategoryId = 1,
-                            Price = 8388.46m,
-                            Title = "Tasty Metal Soap",
-                            UrlImage = "https://blobinz.blob.core.windows.net/images/ksiazka.jpg",
+                            CreatedDate = new DateTime(2023, 11, 6, 12, 24, 58, 655, DateTimeKind.Local).AddTicks(1080),
+                            Description = "New ABC 13 9370, 13.3, 5th Gen CoreA5-8250U, 8GB RAM, 256GB SSD, power UHD Graphics, OS 10 Home, OS Office A & J 2016",
+                            LastModifiedDate = new DateTime(2023, 11, 6, 12, 24, 58, 655, DateTimeKind.Local).AddTicks(1107),
+                            MainCategoryId = 3,
+                            Price = 3014.20m,
+                            Title = "Sleek Cotton Bike",
+                            UrlImage = "https://blobinz.blob.core.windows.net/images/tv.jpg",
                             UserId = 1
                         });
                 });
@@ -203,52 +206,52 @@ namespace cityScope.NET.Server.Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Automotive"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Computers"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Clothing"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Music"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Electronics"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Electronics"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Computers"
-                        },
-                        new
-                        {
-                            Id = 8,
                             Name = "Toys"
                         },
                         new
                         {
-                            Id = 9,
+                            Id = 2,
+                            Name = "Beauty"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Jewelery"
+                        },
+                        new
+                        {
+                            Id = 4,
                             Name = "Outdoors"
                         },
                         new
                         {
+                            Id = 5,
+                            Name = "Jewelery"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Outdoors"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Kids"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Tools"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "Sports"
+                        },
+                        new
+                        {
                             Id = 10,
-                            Name = "Shoes"
+                            Name = "Automotive"
                         });
                 });
 
@@ -292,12 +295,12 @@ namespace cityScope.NET.Server.Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2023, 11, 6, 13, 28, 11, 707, DateTimeKind.Local).AddTicks(4404),
+                            CreatedDate = new DateTime(2023, 11, 6, 12, 24, 58, 650, DateTimeKind.Local).AddTicks(7508),
                             Email = "example@example.com",
                             LastModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastTimeLogin = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PasswordHash = new byte[] { 213, 93, 107, 37, 68, 1, 138, 109, 67, 170, 253, 21, 47, 91, 97, 172, 100, 250, 13, 6, 150, 126, 50, 163, 126, 15, 29, 145, 2, 222, 247, 149, 46, 244, 162, 67, 17, 74, 131, 126, 215, 20, 34, 146, 204, 63, 162, 199, 158, 219, 115, 237, 16, 91, 194, 224, 253, 38, 127, 146, 168, 29, 231, 96 },
-                            PasswordSalt = new byte[] { 158, 75, 93, 60, 72, 162, 93, 151, 28, 253, 229, 192, 18, 122, 117, 79, 57, 72, 108, 212, 72, 237, 147, 37, 121, 29, 114, 204, 172, 224, 135, 91, 222, 161, 21, 111, 4, 200, 168, 126, 12, 135, 219, 62, 116, 76, 184, 130, 16, 212, 49, 39, 165, 184, 50, 178, 25, 164, 106, 91, 126, 70, 10, 35, 237, 201, 211, 141, 0, 111, 12, 107, 78, 238, 111, 107, 154, 46, 198, 13, 139, 170, 10, 169, 60, 190, 84, 109, 59, 168, 142, 252, 156, 127, 93, 248, 19, 156, 29, 216, 215, 74, 202, 42, 192, 215, 116, 254, 13, 19, 158, 94, 194, 96, 72, 22, 11, 165, 90, 122, 44, 202, 61, 27, 47, 59, 115, 17 },
+                            PasswordHash = new byte[] { 176, 72, 184, 74, 45, 228, 84, 23, 181, 59, 28, 170, 215, 223, 123, 109, 235, 224, 34, 251, 241, 49, 235, 201, 248, 124, 50, 229, 123, 137, 177, 235, 154, 66, 34, 9, 183, 140, 167, 160, 69, 2, 135, 233, 155, 166, 131, 103, 10, 147, 97, 26, 47, 1, 237, 25, 18, 54, 89, 159, 115, 33, 175, 114 },
+                            PasswordSalt = new byte[] { 178, 197, 164, 125, 77, 4, 228, 180, 221, 218, 22, 192, 207, 245, 72, 24, 118, 34, 22, 153, 35, 208, 205, 132, 131, 22, 154, 95, 221, 64, 163, 254, 102, 57, 208, 240, 138, 172, 244, 197, 167, 198, 92, 157, 228, 172, 206, 184, 98, 28, 147, 69, 170, 145, 67, 26, 16, 52, 62, 231, 130, 52, 102, 55, 186, 177, 153, 121, 249, 230, 80, 74, 123, 89, 117, 121, 64, 214, 214, 45, 21, 252, 228, 11, 230, 67, 79, 175, 182, 2, 59, 229, 13, 183, 185, 156, 130, 93, 189, 136, 216, 125, 118, 143, 201, 175, 175, 214, 45, 215, 17, 145, 165, 90, 47, 234, 90, 20, 5, 104, 246, 236, 8, 85, 166, 157, 84, 121 },
                             isBlocked = false
                         });
                 });
@@ -306,9 +309,7 @@ namespace cityScope.NET.Server.Persistence.Migrations
                 {
                     b.HasOne("cityScope.NET.Server.Domain.Entities.MainCategory", "MainCategory")
                         .WithMany()
-                        .HasForeignKey("MainCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MainCategoryId");
 
                     b.HasOne("cityScope.NET.Server.Domain.Entities.User", "User")
                         .WithMany()

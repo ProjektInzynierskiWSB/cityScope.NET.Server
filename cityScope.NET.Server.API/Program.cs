@@ -56,6 +56,8 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAnnouncementService, AnnouncementService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPhotosService, PhotosService>();
+builder.Services.AddScoped<IMainCategoryRepository, MainCategoryRepository>();
+builder.Services.AddScoped<IMainCategoryService, MainCategoryService>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.Configure<StorageAccountOptions>(builder.Configuration.GetSection("StorageAccount"));
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

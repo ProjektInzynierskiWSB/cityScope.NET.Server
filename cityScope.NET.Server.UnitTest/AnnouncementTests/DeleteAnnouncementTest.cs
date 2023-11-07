@@ -1,57 +1,52 @@
-﻿using cityScope.NET.Server.Application.Dtos;
-using cityScope.NET.Server.Application.Interfaces;
+﻿using cityScope.NET.Server.Application.Interfaces;
 using cityScope.NET.Server.Application.Services;
 using cityScope.NET.Server.Application.Services.Interfaces;
 using cityScope.NET.Server.UnitTest.Mocks;
 using Moq;
 using Shouldly;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace cityScope.NET.Server.UnitTest.AnnouncementTests
+namespace cityScope.NET.Server.UnitTest.AnnouncementTests;
+
+public class DeleteAnnouncementTest
 {
-    public class DeleteAnnouncementTest
+    private readonly Mock<IAnnouncementRepository> _mockRepository;
+    private readonly Mock<IUserService> _mockUserService;
+    private readonly Mock<IPhotosService> _mockPhotosService;
+    private readonly Mock<IMainCategoryService> _mockMainCategoryService;
+
+    public DeleteAnnouncementTest()
     {
-        private readonly Mock<IAnnouncementRepository> _mockRepository;
-        private readonly Mock<IUserService> _mockUserService;
-        private readonly Mock<IPhotosService> _mockPhotosService;
+        _mockRepository = RepositoryMocks.GetAnnouncementRepository();
+        _mockUserService = RepositoryMocks.GetUserService();
+        _mockPhotosService = RepositoryMocks.GetPhotosService();
+        _mockMainCategoryService = RepositoryMocks.GetMainCategoryService();
+    }
 
-        public DeleteAnnouncementTest()
-        {
-            _mockRepository = RepositoryMocks.GetAnnouncementRepository();
-            _mockUserService = RepositoryMocks.GetUserService();
-            _mockPhotosService = RepositoryMocks.GetPhotosService();
-        }
+    [Fact]
+    public async Task ValidAnnouncement_DeletedFromRepo()
+    {
+        var handler = new AnnouncementService(_mockRepository.Object, _mockUserService.Object, _mockPhotosService.Object, _mockMainCategoryService.Object);
+        var allAnnouncementBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
 
-        [Fact]
-        public async Task ValidAnnouncement_DeletedFromRepo()
-        {
-            var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object, _mockPhotosService.Object);
-            var allAnnouncementBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
+        var response = await handler.DeleteAnnouncement(1);
 
-            var response = await hanlder.DeleteAnnouncement(1);
+        var allAfter = await _mockRepository.Object.GetAllAsync();
 
-            var allAfter = await _mockRepository.Object.GetAllAsync();
+        response.Success.ShouldBe(true);
+        allAfter.Count.ShouldBe(allAnnouncementBeforeCount - 1);
+    }
 
-            response.Success.ShouldBe(true);
-            allAfter.Count.ShouldBe(allAnnouncementBeforeCount - 1);
-        }
+    [Fact]
+    public async Task NotValidAnnouncement_DiffrentUserId_NotDeletedFromRepo()
+    {
+        var handler = new AnnouncementService(_mockRepository.Object, _mockUserService.Object, _mockPhotosService.Object, _mockMainCategoryService.Object);
+        var allAnnouncementBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
 
-        [Fact]
-        public async Task NotValidAnnouncement_DiffrentUserId_NotDeletedFromRepo()
-        {
-            var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object, _mockPhotosService.Object);
-            var allAnnouncementBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
+        var response = await handler.DeleteAnnouncement(6);
 
-            var response = await hanlder.DeleteAnnouncement(6);
+        var allAfter = await _mockRepository.Object.GetAllAsync();
 
-            var allAfter = await _mockRepository.Object.GetAllAsync();
-
-            response.Success.ShouldBe(false);
-            allAfter.Count.ShouldBe(allAnnouncementBeforeCount);
-        }
+        response.Success.ShouldBe(false);
+        allAfter.Count.ShouldBe(allAnnouncementBeforeCount);
     }
 }

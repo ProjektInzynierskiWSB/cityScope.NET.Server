@@ -13,21 +13,27 @@ namespace cityScope.NET.Server.Application.Services
         private readonly IAnnouncementRepository _announcementRepository;
         private readonly IUserService _userService;
         private readonly IPhotosService _photosService;
+        private readonly IMainCategoryService _mainCategoryService;
 
-        public AnnouncementService(IAnnouncementRepository announcementRepository, IUserService userService, IPhotosService photosService)
+        public AnnouncementService(IAnnouncementRepository announcementRepository, 
+            IUserService userService, 
+            IPhotosService photosService,
+            IMainCategoryService mainCategoryService)
         {
             _announcementRepository = announcementRepository;
             _userService = userService;
             _photosService = photosService;
+            _mainCategoryService = mainCategoryService;
         }
 
         public async Task<BaseResponse<int>> AddAnnouncement(AddAnnouncementDto dto)
         {
             BaseResponse<int> response = new();
             int userId = _userService.GetUserId();
+            var categoryExist = await _mainCategoryService.IsIdExist(dto.MainCategoryId);
             AnnouncementValidator validator = new();
             var validadorResult = await validator.ValidateAsync(dto);
-            if (validadorResult.IsValid)
+            if (validadorResult.IsValid && categoryExist.Data)
             {
                 Announcement announcement = new();
                 if (dto.Image != null)
@@ -39,6 +45,7 @@ namespace cityScope.NET.Server.Application.Services
                 announcement.Description = dto.Description;
                 announcement.Title = dto.Title;
                 announcement.UserId = userId;
+                announcement.MainCategoryId = dto.MainCategoryId;
 
                 var result = await _announcementRepository.AddAsync(announcement);
                 response.Data = result.Id;
@@ -49,6 +56,7 @@ namespace cityScope.NET.Server.Application.Services
             response.Data = 0;
             response.Success = false;
             response.Message = string.Join(", ", validadorResult.Errors);
+            response.Message = string.Join(", ", categoryExist.Message);
             return response;
         }
 
