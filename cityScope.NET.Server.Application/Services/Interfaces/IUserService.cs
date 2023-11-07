@@ -10,6 +10,8 @@ namespace cityScope.NET.Server.Application.Services.Interfaces
 {
     public interface IUserService
     {
+        Task<BaseResponse<bool>> UpdateUser(UserDto userDto, int userId);
+        Task<BaseResponse<bool>> RateUser(int rate, string userEmail);
         Task<BaseResponse<int>> Register(UserRegisterDto userDto, string password);
         Task<BaseResponse<string>> Login(UserLoginDto user);
         int GetUserId();
