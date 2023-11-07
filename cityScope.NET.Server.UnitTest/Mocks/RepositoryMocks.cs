@@ -5,7 +5,6 @@ using cityScope.NET.Server.Application.Services.Interfaces;
 using cityScope.NET.Server.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Moq;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace cityScope.NET.Server.UnitTest.Mocks;
 
@@ -30,16 +29,16 @@ public class RepositoryMocks
 
         mockMainCategoryService.Setup(repo => repo.GetAllCategories()).ReturnsAsync(categoriesListResponse);
 
-       mockMainCategoryService.Setup(repo => repo.IsIdExist(It.IsAny<int>())).ReturnsAsync(
-            (int id) =>
-            {
-                var category = mainCategories.FirstOrDefault(c => c.Id == id);
-                if (category != null)
-                {
-                    return new BaseResponse<bool> { Data = true, Success = true };
-                }
-                return new BaseResponse<bool> { Data = false, Success = false };
-            });
+        mockMainCategoryService.Setup(repo => repo.IsIdExist(It.IsAny<int>())).ReturnsAsync(
+             (int id) =>
+             {
+                 var category = mainCategories.FirstOrDefault(c => c.Id == id);
+                 if (category != null)
+                 {
+                     return new BaseResponse<bool> { Data = true, Success = true };
+                 }
+                 return new BaseResponse<bool> { Data = false, Success = false };
+             });
         return mockMainCategoryService;
     }
     public static Mock<IPhotosService> GetPhotosService()
@@ -150,6 +149,9 @@ public class RepositoryMocks
             PasswordHash = new byte[2] { 1, 2 },
             PasswordSalt = new byte[2] { 1, 2 },
             CreatedDate = DateTime.Now,
+            Rate = 5,
+            UserDescription = "Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals",
+            CountOfAllRates = 2
         };
         User u2 = new User()
         {
@@ -158,6 +160,9 @@ public class RepositoryMocks
             PasswordHash = new byte[2] { 1, 2 },
             PasswordSalt = new byte[2] { 1, 2 },
             CreatedDate = DateTime.Now,
+            Rate = 5,
+            UserDescription = "Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals",
+            CountOfAllRates = 1
         };
         User u3 = new User()
         {
@@ -166,6 +171,9 @@ public class RepositoryMocks
             PasswordHash = new byte[2] { 1, 2 },
             PasswordSalt = new byte[2] { 1, 2 },
             CreatedDate = DateTime.Now,
+            Rate = 5,
+            UserDescription = "Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals",
+            CountOfAllRates = 2
         };
         list.Add(u1); list.Add(u2); list.Add(u3);
 
