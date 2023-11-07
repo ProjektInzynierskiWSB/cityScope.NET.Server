@@ -1,6 +1,7 @@
 ﻿using cityScope.NET.Server.Application.Dtos;
 using cityScope.NET.Server.Application.Response;
 using cityScope.NET.Server.Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cityScope.NET.Server.API.Controllers
@@ -17,6 +18,7 @@ namespace cityScope.NET.Server.API.Controllers
         }
 
         [HttpGet(Name = "GetCategories")]
+        [Authorize]
         public async Task<ActionResult<BaseResponse<List<MainCategoryDto>>>> GetCategories()
         {
             var result = await _mainCategoryService.GetAllCategories();
