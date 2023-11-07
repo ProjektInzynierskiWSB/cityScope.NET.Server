@@ -30,6 +30,57 @@ namespace cityScope.NET.Server.Application.Services
             _configuration = configuration;
             _contextAccessor = contextAccessor;
         }
+        public async Task<BaseResponse<bool>> RateUser(int rate, string userEmail)
+        {
+            BaseResponse<bool> response = new();
+
+            if (rate < 1 || rate > 5)
+            {
+                response.Success = false;
+                response.Message = "Rate is not valid. It should be between 1 and 5.";
+                response.Data = false;
+                return response;
+            }
+
+            var user = await _userRepository.GetUserByEmail(userEmail);
+            if (user != null)
+            {
+                var newRate = (user.Rate + rate) / (user.CountOfAllRates + 1);
+                user.CountOfAllRates += 1;
+                user.Rate = newRate;
+                await _userRepository.UpdateAsync(user);
+                response.Success = true;
+                response.Data = true;
+                return response;
+            }
+            response.Success = false;
+            response.Data = false;
+            response.Message = (user == null) ? "user not found" : string.Empty;
+
+            return response;
+        }
+        public async Task<BaseResponse<bool>> UpdateUser(UserDto userDto, int userId)
+        {
+            BaseResponse<bool> response = new();
+            UserEditValidator validator = new();
+            var validatorResult = await validator.ValidateAsync(userDto); 
+            var user = await _userRepository.GetByIdAsync(userId);
+            if (user != null && validatorResult.IsValid)
+            {
+                user.UserDescription = userDto.Description;
+                await _userRepository.UpdateAsync(user);
+                response.Success = true;
+                response.Data = true;
+                return response;
+            }
+
+            response.Success = false;
+            response.Data = false;
+            response.Message = (user == null) ? "user not found" : string.Empty;
+            response.Message = string.Join(", ", validatorResult.Errors);
+
+            return response;
+        }
 
         public async Task<BaseResponse<int>> Register(UserRegisterDto userDto, string password)
         {
