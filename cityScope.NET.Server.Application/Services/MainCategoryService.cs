@@ -26,6 +26,7 @@ public class MainCategoryService : IMainCategoryService
 			response.Message = "List was empty";
 			return response;
 		}
+		List<MainCategoryDto> list = new();
 		foreach (var item in result)
 		{
 			MainCategoryDto dto = new()
@@ -33,8 +34,9 @@ public class MainCategoryService : IMainCategoryService
 				Id = item.Id,
 				Name = item.Name
 			};
-			response.Data.Add(dto);
+			list.Add(dto);
 		}
+		response.Data = list;
 		response.Success = true;
 		return response;
 	}
