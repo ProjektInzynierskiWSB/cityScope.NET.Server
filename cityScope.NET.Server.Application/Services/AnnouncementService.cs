@@ -5,6 +5,7 @@ using cityScope.NET.Server.Application.Response;
 using cityScope.NET.Server.Application.Services.Interfaces;
 using cityScope.NET.Server.Application.Validators;
 using cityScope.NET.Server.Domain.Entities;
+using Microsoft.IdentityModel.Tokens;
 
 namespace cityScope.NET.Server.Application.Services
 {
@@ -168,7 +169,7 @@ namespace cityScope.NET.Server.Application.Services
             return response;
         }
 
-        public async Task<BaseResponse<bool>> UpdateAnnouncement(AddAnnouncementDto dto, int id)
+        public async Task<BaseResponse<bool>> UpdateAnnouncement(UpdateAnnouncementDto dto, int id)
         {
             BaseResponse<bool> response = new();
             var result = await _announcementRepository.GetByIdAsync(id);
@@ -180,7 +181,7 @@ namespace cityScope.NET.Server.Application.Services
             }
 
             int userId = _userService.GetUserId();
-            AnnouncementValidator validator = new();
+            UpdateAnnouncementValidator validator = new();
             var validadorResult = await validator.ValidateAsync(dto);
             if (validadorResult.IsValid && result.UserId == userId)
             {
@@ -189,9 +190,9 @@ namespace cityScope.NET.Server.Application.Services
                     var blobResponse = await _photosService.UploadImage(dto.Image);
                     result.UrlImage = blobResponse.Blob.Uri;
                 }
-                result.Price = dto.Price;
-                result.Description = dto.Description;
-                result.Title = dto.Title;
+                result.Price = dto.Price.HasValue ? dto.Price.Value : result.Price;
+                result.Description = !string.IsNullOrEmpty(dto.Description) ? dto.Description : result.Description;
+                result.Title = !string.IsNullOrEmpty(dto.Title) ? dto.Title : result.Title;
                 await _announcementRepository.UpdateAsync(result);
                 response.Data = true;
                 response.Message = "Update succesfully";
