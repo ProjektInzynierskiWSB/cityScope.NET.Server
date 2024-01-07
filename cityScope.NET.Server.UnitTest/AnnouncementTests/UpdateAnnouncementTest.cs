@@ -28,12 +28,11 @@ public class UpdateAnnouncementTest
     {
         var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object, _mockPhotosService.Object, _mockMainCategoriesService.Object);
         var allAnnouncementBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
-        AddAnnouncementDto announcementDto = new()
+        UpdateAnnouncementDto announcementDto = new()
         {
             Title = "Testvalid",
             Description = "TestValid",
-            Price = 11.99m,
-            MainCategoryId = 1
+            Price = 11.99m
         };
 
         var response = await hanlder.UpdateAnnouncement(announcementDto, 1);
@@ -50,7 +49,7 @@ public class UpdateAnnouncementTest
     {
         var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object, _mockPhotosService.Object, _mockMainCategoriesService.Object);
         var allAnnouncementBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
-        AddAnnouncementDto announcementDto = new()
+        UpdateAnnouncementDto announcementDto = new()
         {
             Title = new string('*', 101),
             Description = "TestValid",
@@ -71,7 +70,7 @@ public class UpdateAnnouncementTest
     {
         var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object, _mockPhotosService.Object, _mockMainCategoriesService.Object);
         var allAnnouncementBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
-        AddAnnouncementDto announcementDto = new()
+        UpdateAnnouncementDto announcementDto = new()
         {
             Title = "TestValid",
             Description = new string('*', 1001),
@@ -92,7 +91,7 @@ public class UpdateAnnouncementTest
     {
         var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object, _mockPhotosService.Object, _mockMainCategoriesService.Object);
         var allAnnouncementBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
-        AddAnnouncementDto announcementDto = new()
+        UpdateAnnouncementDto announcementDto = new()
         {
             Title = "TestValid",
             Description = "TestValid",
@@ -114,7 +113,7 @@ public class UpdateAnnouncementTest
         var hanlder = new AnnouncementService(_mockRepository.Object, _mockUserService.Object, _mockPhotosService.Object, _mockMainCategoriesService.Object);
 
         var allAnnouncementBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
-        AddAnnouncementDto announcementDto = new()
+        UpdateAnnouncementDto announcementDto = new()
         {
             Title = "TestValid",
             Description = "TestValid",
