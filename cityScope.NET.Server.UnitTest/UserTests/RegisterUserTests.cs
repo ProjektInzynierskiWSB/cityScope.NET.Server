@@ -35,6 +35,7 @@ namespace cityScope.NET.Server.UnitTest.UserTests
             UserRegisterDto userRegisterDto = new()
             {
                 Email = "example4@example.com",
+                NickName = "NickName",
                 Password = "Haslo123",
                 ConfirmPassword = "Haslo123"
             };
@@ -54,6 +55,7 @@ namespace cityScope.NET.Server.UnitTest.UserTests
             UserRegisterDto userRegisterDto = new()
             {
                 Email = "example",
+                NickName = "NickName",
                 Password = "Haslo123",
                 ConfirmPassword = "Haslo123"
             };
@@ -73,6 +75,7 @@ namespace cityScope.NET.Server.UnitTest.UserTests
             UserRegisterDto userRegisterDto = new()
             {
                 Email = "example@example.com",
+                NickName = "NickName",
                 Password = "Haslo1231",
                 ConfirmPassword = "Haslo123"
             };
@@ -86,6 +89,26 @@ namespace cityScope.NET.Server.UnitTest.UserTests
 
         [Fact]
         public async Task NotValid_NotRegister_PasswordTooShort()
+        {
+            var handler = new UserService(_mockRepository.Object, _configuration, _contextAccessor);
+            var allUsersBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();
+            UserRegisterDto userRegisterDto = new()
+            {
+                Email = "example@example.com",
+                NickName = "NickName",
+                Password = "Haslo",
+                ConfirmPassword = "Haslo"
+            };
+
+            var response = await handler.Register(userRegisterDto, userRegisterDto.Password);
+            var allAfter = await _mockRepository.Object.GetAllAsync();
+
+            response.Success.ShouldBe(false);
+            allAfter.Count.ShouldBe(allUsersBeforeCount);
+        }
+
+        [Fact]
+        public async Task NotValid_NotRegister_MissingNickName()
         {
             var handler = new UserService(_mockRepository.Object, _configuration, _contextAccessor);
             var allUsersBeforeCount = (await _mockRepository.Object.GetAllAsync()).Count();

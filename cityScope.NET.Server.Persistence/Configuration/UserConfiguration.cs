@@ -16,6 +16,7 @@ namespace cityScope.NET.Server.Persistence.Configuration
             builder.Property(u => u.Email).IsRequired().HasAnnotation("Uniqueness", "Email").HasMaxLength(255);
             builder.Property(u => u.PasswordHash).IsRequired();
             builder.Property(u => u.PasswordSalt).IsRequired();
+            builder.Property(u => u.NickName).IsRequired();
         }
     }
 }

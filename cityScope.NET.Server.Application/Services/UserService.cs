@@ -103,6 +103,7 @@ namespace cityScope.NET.Server.Application.Services
             user.Email = userDto.Email;
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
+            user.NickName = userDto.NickName;
 
             var result =  await _userRepository.AddAsync(user);
 
