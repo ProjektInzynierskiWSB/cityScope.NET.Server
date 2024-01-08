@@ -28,6 +28,7 @@ namespace cityScope.NET.Server.Persistence.DummyData
             var userGenerator = new Faker<User>(locale)
                 .RuleFor(u => u.Id, _ => 1)
                 .RuleFor(u => u.Email, "example@example.com")
+                .RuleFor(u => u.NickName, f => f.Internet.UserName())
                 .RuleFor(u => u.PasswordHash, passwordHash)
                 .RuleFor(u => u.PasswordSalt, passwordSalt)
                 .RuleFor(u => u.Rate, f => f.PickRandom<int>(1, 5))
