@@ -4,7 +4,6 @@ using cityScope.NET.Server.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Org.BouncyCastle.Pkcs;
 
 namespace cityScope.NET.Server.API.Controllers
 {
@@ -15,10 +14,10 @@ namespace cityScope.NET.Server.API.Controllers
     {
         private readonly IUserService _userService;
 
-       public AuthController(IUserService userService)
-       {
+        public AuthController(IUserService userService)
+        {
             _userService = userService;
-       }
+        }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

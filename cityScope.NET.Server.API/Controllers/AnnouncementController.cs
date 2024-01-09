@@ -69,7 +69,7 @@ namespace cityScope.NET.Server.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
         [Authorize]
-        public async Task<ActionResult<bool>> UpdateAnnouncement([FromForm] UpdateAnnouncementDto announcement, [FromRoute] int id)
+        public async Task<ActionResult<BaseResponse<bool>>> UpdateAnnouncement([FromForm] UpdateAnnouncementDto announcement, [FromRoute] int id)
         {
             var result = await _announcementService.UpdateAnnouncement(announcement, id);
             if (result.Success == false)
