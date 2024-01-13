@@ -17,15 +17,15 @@ namespace cityScope.NET.Server.API.Controllers
             _announcementService = announcementService;
         }
 
-        [HttpGet(Name = "GetAllAnnouncements")]
-        [Authorize]
-        public async Task<ActionResult<BaseResponse<List<AnnouncementDto>>>> GetAllAnnouncements()
-        {
-            var result = await _announcementService.GetAllAsync();
-            return Ok(result);
-        }
+        //[HttpGet(Name = "GetAllAnnouncements")]
+        //[Authorize]
+        //public async Task<ActionResult<BaseResponse<List<AnnouncementDto>>>> GetAllAnnouncements()
+        //{
+        //    var result = await _announcementService.GetAllAsync();
+        //    return Ok(result);
+        //}
 
-        [HttpGet("/GetPagedAnnouncements", Name = "GetPagedAnnouncements")]
+        [HttpGet(Name = "GetPagedAnnouncements")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
         public async Task<ActionResult<BaseResponse<PagedAnnouncementsDto>>> GetPagedAnnouncements(int page, int pageSize)
