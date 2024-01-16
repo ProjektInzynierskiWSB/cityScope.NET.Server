@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace cityScope.NET.Server.API.Controllers
 {
     [Route("api/[controller]")]
-    [EnableCors]
     [ApiController]
     public class AuthController : ControllerBase
     {
