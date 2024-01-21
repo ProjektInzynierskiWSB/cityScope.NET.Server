@@ -151,6 +151,7 @@ namespace cityScope.NET.Server.Application.Services
             {
                 AnnouncementDto dto = new()
                 {
+                    Id = item.Id,
                     Title = item.Title,
                     Description = item.Description,
                     Price = item.Price,
