@@ -18,7 +18,6 @@ namespace cityScope.NET.Server.API.Controllers
         }
 
         [HttpGet(Name = "GetCategories")]
-        [Authorize]
         public async Task<ActionResult<BaseResponse<List<MainCategoryDto>>>> GetCategories()
         {
             var result = await _mainCategoryService.GetAllCategories();
