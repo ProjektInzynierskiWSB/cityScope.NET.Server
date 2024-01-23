@@ -110,29 +110,31 @@ namespace cityScope.NET.Server.Application.Services
             return new BaseResponse<int>() { Data = result.Id, Message = "User register sucessful" };
         }
 
-        public async Task<BaseResponse<string>> Login(UserLoginDto userDto)
+        public async Task<BaseResponse<LoginResponseDto>> Login(UserLoginDto userDto)
         {
-            BaseResponse<string> response = new();
+            BaseResponse<LoginResponseDto> response = new();
             UserLoginValidator validator = new();
             var validadorResult = await validator.ValidateAsync(userDto);
 
             if (!validadorResult.IsValid)
             {
-                return new BaseResponse<string>() { Success = false, Message = string.Join(", ", validadorResult.Errors) };
+                return new BaseResponse<LoginResponseDto>() { Success = false, Message = string.Join(", ", validadorResult.Errors) };
             }
 
             var user = await _userRepository.GetUserByEmail(userDto.Email);
             if (user == null)
             {
-                return new BaseResponse<string>() { Success = false, Message = "User not exist or wrong password" };
+                return new BaseResponse<LoginResponseDto>() { Success = false, Message = "User not exist or wrong password" };
             }
             else if(!PasswordHasher.VerifyPasswordHash(userDto.Password, user.PasswordHash, user.PasswordSalt)) 
             {
-                return new BaseResponse<string>() { Success = false, Message = "User not exist or wrong password" };
+                return new BaseResponse<LoginResponseDto>() { Success = false, Message = "User not exist or wrong password" };
             }
             else
             {
-                response.Data = CreateToken(user);
+                response.Data = new LoginResponseDto();
+                response.Data.Token = CreateToken(user);
+                response.Data.UserName = user.NickName;
             }
             return response;
         }

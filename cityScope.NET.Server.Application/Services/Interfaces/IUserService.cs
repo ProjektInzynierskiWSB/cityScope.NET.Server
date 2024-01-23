@@ -13,7 +13,7 @@ namespace cityScope.NET.Server.Application.Services.Interfaces
         Task<BaseResponse<bool>> UpdateUser(UserDto userDto, int userId);
         Task<BaseResponse<bool>> RateUser(int rate, string userEmail);
         Task<BaseResponse<int>> Register(UserRegisterDto userDto, string password);
-        Task<BaseResponse<string>> Login(UserLoginDto user);
+        Task<BaseResponse<LoginResponseDto>> Login(UserLoginDto user);
         int GetUserId();
         string GetUserEmail();
     }

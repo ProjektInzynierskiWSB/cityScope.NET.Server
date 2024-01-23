@@ -119,12 +119,14 @@ namespace cityScope.NET.Server.Application.Services
             }
 
             AnnouncementDto dto = new();
+            dto.Id = result.Id;
             dto.Title = result.Title;
             dto.Description = result.Description;
             dto.Price = result.Price;
             dto.CreatedDate = result.CreatedDate;
             dto.UserId = result.UserId;
             dto.ImageUrl = result.UrlImage;
+            dto.CategoryId = result.MainCategoryId;
 
             response.Data = dto;
             return response;
