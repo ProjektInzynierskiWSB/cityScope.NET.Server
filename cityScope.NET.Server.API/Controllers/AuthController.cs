@@ -36,7 +36,7 @@ namespace cityScope.NET.Server.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPost("Login")]
-        public async Task<ActionResult<BaseResponse<string>>> Login(UserLoginDto loginDto)
+        public async Task<ActionResult<BaseResponse<LoginResponseDto>>> Login(UserLoginDto loginDto)
         {
             var response = await _userService.Login(loginDto);
             if (!response.Success)
