@@ -6,6 +6,7 @@ using cityScope.NET.Server.Application.Services.Interfaces;
 using cityScope.NET.Server.Application.Validators;
 using cityScope.NET.Server.Domain.Entities;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.JSInterop.Infrastructure;
 
 namespace cityScope.NET.Server.Application.Services
 {
@@ -110,7 +111,7 @@ namespace cityScope.NET.Server.Application.Services
         public async Task<BaseResponse<AnnouncementDto>> GetAsyncId(int id)
         {
             BaseResponse<AnnouncementDto> response = new();
-            var result = await _announcementRepository.GetByIdAsync(id);
+            var result = await _announcementRepository.GetAnnouncementAsyncById(id);
             if (result == null)
             {
                 response.Success = false;
@@ -127,6 +128,8 @@ namespace cityScope.NET.Server.Application.Services
             dto.UserId = result.UserId;
             dto.ImageUrl = result.UrlImage;
             dto.CategoryId = result.MainCategoryId;
+            dto.UserName = result.User.NickName;
+            dto.UserEmail = result.User.Email;
 
             response.Data = dto;
             return response;

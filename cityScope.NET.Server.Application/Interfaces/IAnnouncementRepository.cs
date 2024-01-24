@@ -11,5 +11,6 @@ namespace cityScope.NET.Server.Application.Interfaces
     {
         Task<List<Announcement>> GetPagedAnnouncement(int page, int pageSize);
         Task<int> GetTotalCountOfAnnouncements();
+        Task<Announcement> GetAnnouncementAsyncById(int id);
     }
 }
