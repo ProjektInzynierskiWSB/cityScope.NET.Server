@@ -54,4 +54,4 @@ jobs:
           app-name: 'cityscope-dev'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.cityscope_dev_PUBLISH_PROFILE }}
+          publish-profile: ${{ secrets.CITYSCOPE_DEV_PUBLISH_PROFILE }}
