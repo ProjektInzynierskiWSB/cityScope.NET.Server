@@ -54,4 +54,4 @@ jobs:
           app-name: 'cityscope-dev'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_83F77BEA613A446FB8BD871FF3B79332 }}
+          publish-profile: ${{ secrets.cityscope_dev_PUBLISH_PROFILE }}
